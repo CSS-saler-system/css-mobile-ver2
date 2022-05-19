@@ -12,7 +12,7 @@ class AppRouters {
       case signIn:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
       case otpConfirm:
-        return MaterialPageRoute(builder: (_) => const OtpConfirmScreen());
+        return MaterialPageRoute(builder: (_) => const OtpConfirmScreen(verificationId: "",));
       default:
         return animRoute(
             Container(

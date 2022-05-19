@@ -43,9 +43,22 @@ dependencies:
   cloud_firestore: ^3.1.15
   firebase_core: ^1.17.0
 
+  # SERVICE
+  equatable: ^2.0.3
+  get_it: ^7.2.0
+  retrofit: ^3.0.1+1
+  either_dart: ^0.1.4
+  flutter_bloc: ^8.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  injectable_generator: 
+  build_runner:
+  retrofit_generator: 
+  json_serializable: 
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

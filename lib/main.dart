@@ -4,15 +4,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/configs/configs.dart';
 import 'package:flutter_application_1/src/presentations/splash/splash_screen.dart';
 
+import 'src/configs/di/injection.dart';
+
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
     statusBarBrightness: Brightness.dark,
   ));
-
+  await configureDependencies();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 

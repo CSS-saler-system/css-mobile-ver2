@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/utils/validation.dart';
 
 class PhoneInputWidget extends StatefulWidget {
-  const PhoneInputWidget({Key? key}) : super(key: key);
+  final Function(String)? onChanged;
+  final TextEditingController? controller;
+  const PhoneInputWidget({Key? key, this.controller, this.onChanged})
+      : super(key: key);
 
   @override
   State<PhoneInputWidget> createState() => _PhoneInputWidgetState();
@@ -29,6 +32,8 @@ class _PhoneInputWidgetState extends State<PhoneInputWidget> {
           decoration: const BoxDecoration(
               border: Border(left: BorderSide(color: Colors.white))),
           child: TextFormField(
+            controller: widget.controller,
+            onChanged: widget.onChanged,
             validator: (value) => AppValidations.validatePhoneNumber(value),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(

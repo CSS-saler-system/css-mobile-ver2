@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinCodeInput extends StatefulWidget {
-  const PinCodeInput({Key? key}) : super(key: key);
+  final Function(String?)? onCompleted;
+  const PinCodeInput({Key? key, this.onCompleted}) : super(key: key);
 
   @override
   State<PinCodeInput> createState() => _PinCodeInputState();
@@ -13,6 +14,7 @@ class _PinCodeInputState extends State<PinCodeInput> {
   Widget build(BuildContext context) {
     return Container(
       child: PinCodeTextField(
+        onCompleted: widget.onCompleted,
         appContext: context,
         length: 6,
         keyboardType: TextInputType.number,
