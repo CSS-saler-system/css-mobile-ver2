@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "425145469846",
+    "firebase_url": "https://bee-css-default-rtdb.firebaseio.com",
+    "project_id": "bee-css",
+    "storage_bucket": "bee-css.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425145469846:android:4d1b3702176e1a52026bb7",
+        "android_client_info": {
+          "package_name": "com.dht.css.bee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425145469846-95q8ukduo1vl3qng6c60i0uahvm0l0k1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dht.css.bee",
+            "certificate_hash": "1ffcd46aa9645e8069d1bef6bcedb9a2ac8caf22"
+          }
+        },
+        {
+          "client_id": "425145469846-1fa47tsq7nbk9fugjm6n4tln4v0ell7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEnd7EfvN3BVIBcr_WlXIM6N7auBoNx1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425145469846-1fa47tsq7nbk9fugjm6n4tln4v0ell7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
