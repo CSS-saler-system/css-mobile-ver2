@@ -37,6 +37,12 @@ dependencies:
   pin_code_fields: ^7.4.0
   change_app_package_name: ^1.0.0
 
+  # FIREBASE
+  firebase_auth: ^3.3.18
+  firebase_analytics: ^9.1.8
+  cloud_firestore: ^3.1.15
+  firebase_core: ^1.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
