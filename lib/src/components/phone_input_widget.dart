@@ -22,7 +22,7 @@ class _PhoneInputWidgetState extends State<PhoneInputWidget> {
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Text(
-            "+85",
+            "+84",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

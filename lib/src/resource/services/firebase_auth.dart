@@ -1,7 +1,7 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:injectable/injectable.dart';
 
 abstract class FirebaseAuthService {
   Future<String?> verifyPhoneNumber(String phoneNumber);
@@ -15,48 +15,47 @@ class FirebaseAuthServiceImpl extends FirebaseAuthService {
 
   @override
   Future<String?> verifyPhoneNumber(String phoneNumber) async {
-    String result = "";
-    bool running = true;
+    final completer = Completer<String>();
     await _firebaseAuth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await _firebaseAuth.signInWithCredential(credential).then((value) {
           log("You are logged in successfully");
         });
-        running = false;
+        completer.complete("");
       },
       verificationFailed: (FirebaseAuthException e) {
         log("verificationFailed ${e.message}");
-        running = false;
+        completer.complete("");
       },
       codeSent: (String verificationId, int? resendToken) {
         log("codeSent $verificationId");
-        result = verificationId;
-        running = false;
+        completer.complete(verificationId);
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
 
-    if(running == false) {
-      return result;
-    }
+    return completer.future;
   }
 
   @override
   Future<bool> verifyOtp(String verificationId, String otp) async {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: otp);
-    log(credential.token.toString());
+    bool result = false;
 
-    await _firebaseAuth
-        .signInWithCredential(credential)
-        .then((UserCredential user) {
-      log(user.credential!.token.toString());
-      return true;
-    }).catchError((e) {
-      return false;
-    });
-
-    return false;
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: otp);
+      final UserCredential authResult =
+          await _firebaseAuth.signInWithCredential(credential);
+      final User? user = authResult.user;
+      String token = await user!.getIdToken();
+      log("user" + token);
+      if (token.isNotEmpty) {
+        result = true;
+      }
+    } catch (e) {
+      result = false;
+    }
+    return result;
   }
 }

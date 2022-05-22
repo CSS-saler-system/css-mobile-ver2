@@ -1,23 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/presentations/main/main_screen.dart';
 import 'package:flutter_application_1/src/presentations/sign_in/sign_in_screen.dart';
 
+import '../../presentations/create_customer/create_customer_screen.dart';
+import '../../presentations/customer/customer_screen.dart';
+import '../../presentations/edit_profile/edit_profile_screen.dart';
 import '../../presentations/otp_confirm/otp_confirm_screen.dart';
+import '../../presentations/product_detail/product_detail_screen.dart';
 
 class AppRouters {
   static const String signIn = "/sign_in";
   static const String otpConfirm = "/otp_confirm";
+  static const String mainScreen = "/main_screen";
+  static const String editProfile = "/edit_profile";
+  static const String customerScreen = "/customer_screen";
+  static const String createCustomerScreen = "/create_customer_screen";
+  static const String productDetail = "/product_detail";
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    var arguments = settings.arguments;
+    Map arguments =
+        settings.arguments != null ? (settings.arguments as Map) : {};
     switch (settings.name) {
       case signIn:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
+      case mainScreen:
+        return MaterialPageRoute(builder: (_) => const MainScreen());
       case otpConfirm:
-        return MaterialPageRoute(builder: (_) => const OtpConfirmScreen(verificationId: "",));
+        return MaterialPageRoute(
+            builder: (_) => const OtpConfirmScreen(verificationId: ""));
+      case editProfile:
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+      case customerScreen:
+        return MaterialPageRoute(builder: (_) => const CustomerScreen());
+      case createCustomerScreen:
+        return MaterialPageRoute(builder: (_) => const CreateCustomerScreen());
+      case productDetail:
+        return MaterialPageRoute(
+            builder: (_) =>
+                ProductDetailScreen(productId: arguments["productId"]));
       default:
         return animRoute(
-            Container(
-                child: Center(
-                    child: Text('No route defined for ${settings.name}'))),
+            Center(child: Text('No route defined for ${settings.name}')),
             name: "/error");
     }
   }

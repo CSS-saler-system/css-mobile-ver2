@@ -14,10 +14,12 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ButtonStyle(
+          shadowColor: MaterialStateProperty.all<Color>(Colors.black),
+          elevation: MaterialStateProperty.all<double>(3),
           padding: MaterialStateProperty.all(
               const EdgeInsets.symmetric(vertical: 15)),
           backgroundColor: MaterialStateProperty.all<Color>(
-            backgroundColor ?? const Color(0xFFFF7643),
+            backgroundColor ?? Colors.orange,
           ),
         ),
         onPressed: onPressed,
