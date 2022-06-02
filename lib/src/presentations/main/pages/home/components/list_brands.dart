@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/configs/constants/app_images.dart';
+import 'package:flutter_application_1/src/configs/constants/constants.dart';
 
 import '../../../../../components/list_action_hedaer.dart';
 
@@ -19,7 +20,8 @@ class _ListBrandWidgetState extends State<ListBrandWidget> {
         children: [
           ListActionHeader(
             title: "Brands",
-            onPressed: () {},
+            onPressed: () =>
+                Navigator.pushNamed(context, AppRouters.listProduct),
           ),
           const SizedBox(height: 20),
           Expanded(

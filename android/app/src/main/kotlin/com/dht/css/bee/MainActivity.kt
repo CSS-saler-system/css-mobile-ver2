@@ -1,4 +1,4 @@
-package com.dht.css.bee
+package com.app.css.bee
 
 import io.flutter.embedding.android.FlutterActivity
 

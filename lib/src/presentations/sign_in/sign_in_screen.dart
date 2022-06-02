@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/custom_button_widget.dart';
+import 'package:flutter_application_1/src/components/dialog_widget.dart';
 import 'package:flutter_application_1/src/components/phone_input_widget.dart';
 import 'package:flutter_application_1/src/components/srceen_scrollview.dart';
 import 'package:flutter_application_1/src/components/toast_widget.dart';
@@ -63,6 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
         listener: (context, state) {
           log(state.toString());
           if (state is GetOtpLoginSuccess) {
+            Navigator.pop(context);
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => OtpConfirmScreen(
@@ -70,8 +72,16 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
             );
-          } else {
-            showErrorToast(context, "Error");
+          }
+
+          if (state is GetOtpLoginLoading) {
+            DialogHelper.onLoading(context);
+          }
+
+          if (state is GetOtpLoginFailure) {
+            Navigator.pop(context);
+            showErrorToast(
+                context, "Server has error, please try again later!");
           }
         },
         child: BlocBuilder<LoginPhoneBloc, LoginPhoneState>(

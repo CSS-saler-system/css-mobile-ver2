@@ -49,7 +49,7 @@ class FirebaseAuthServiceImpl extends FirebaseAuthService {
           await _firebaseAuth.signInWithCredential(credential);
       final User? user = authResult.user;
       String token = await user!.getIdToken();
-      log("user" + token);
+      log("firebaseToken: " + token);
       if (token.isNotEmpty) {
         result = true;
       }

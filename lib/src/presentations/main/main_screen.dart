@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/home/home_page.dart';
-import 'package:flutter_application_1/src/presentations/main/pages/order_page.dart';
+import 'package:flutter_application_1/src/presentations/main/pages/orders/order_page.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/profile/profile_page.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/request/request_page.dart';
 
@@ -20,6 +20,30 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _pageIndex = 0;
 
+  // fake menu
+  final List<ItemMenu> _items = [
+    const ItemMenu(
+      icon: Icons.home_outlined,
+      index: 0,
+    ),
+    const ItemMenu(
+      icon: Icons.send_outlined,
+      index: 1,
+      hasAppBar: true,
+      title: "Request registration",
+    ),
+    const ItemMenu(
+      icon: Icons.local_grocery_store_outlined,
+      index: 2,
+      hasAppBar: true,
+      title: "My Orders",
+    ),
+    const ItemMenu(
+      icon: Icons.person_outline_outlined,
+      index: 3,
+    ),
+  ];
+
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -31,9 +55,14 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        title: _items[_pageIndex].hasAppBar
+            ? Text(_items[_pageIndex].title ?? "")
+            : const SizedBox(),
+        centerTitle: true,
+        toolbarHeight: _items[_pageIndex].hasAppBar ? kToolbarHeight : 0,
+        backgroundColor:
+            _items[_pageIndex].hasAppBar ? Colors.orange : Colors.transparent,
+        elevation: _items[_pageIndex].hasAppBar ? 1 : 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.dark,
@@ -42,25 +71,29 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: SafeArea(
         child: Stack(children: [
-          PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              onPageChanged: (index) {
-                setState(() {
-                  _pageIndex = index;
-                });
-              },
-              controller: _pageController,
-              children: const [
-                HomePage(),
-                RequestPage(),
-                OrderPage(),
-                ProfilePage(),
-              ]),
+          Container(
+            margin: const EdgeInsets.only(bottom: 50, top: 30),
+            child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                onPageChanged: (index) {
+                  setState(() {
+                    _pageIndex = index;
+                  });
+                },
+                controller: _pageController,
+                children: const [
+                  HomePage(),
+                  RequestPage(),
+                  OrderPage(),
+                  ProfilePage(),
+                ]),
+          ),
           Positioned(
               bottom: 0,
               left: 0,
               right: 0,
               child: BottomNavigation(
+                  items: _items,
                   pageIndex: _pageIndex,
                   itemMenuClicked: (page) => onChangePage(page)))
         ]),
@@ -72,4 +105,17 @@ class _MainScreenState extends State<MainScreen> {
     _pageController.animateToPage(page,
         duration: const Duration(milliseconds: 1), curve: Curves.easeInOut);
   }
+}
+
+class ItemMenu {
+  final IconData icon;
+  final int index;
+  final bool hasAppBar;
+  final String? title;
+  const ItemMenu(
+      {Key? key,
+      required this.icon,
+      required this.index,
+      this.hasAppBar = false,
+      this.title});
 }

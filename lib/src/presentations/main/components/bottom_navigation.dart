@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentations/main/components/navigator_item.dart';
 
+import '../main_screen.dart';
+
 class BottomNavigation extends StatefulWidget {
   final int? pageIndex;
   final Function(int) itemMenuClicked;
+  final List<ItemMenu> items; 
   const BottomNavigation(
-      {Key? key, required this.pageIndex, required this.itemMenuClicked})
+      {Key? key, required this.pageIndex, required this.itemMenuClicked, required this.items})
       : super(key: key);
 
   @override
@@ -13,25 +16,7 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  // fake menu
-  final List<ItemMenu> _items = [
-    const ItemMenu(
-      icon: Icons.home_outlined,
-      index: 0,
-    ),
-    const ItemMenu(
-      icon: Icons.send_outlined,
-      index: 1,
-    ),
-    const ItemMenu(
-      icon: Icons.local_grocery_store_outlined,
-      index: 2,
-    ),
-    const ItemMenu(
-      icon: Icons.person_outline_outlined,
-      index: 3,
-    ),
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +34,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
       ),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _items
+          children: widget.items
               .map((child) => ItemNavigator(
                     icon: Icon(
                       child.icon,
-                      color: _items.indexOf(child) == widget.pageIndex
+                      color: widget.items.indexOf(child) == widget.pageIndex
                           ? Colors.orange
                           : Colors.black,
                     ),
@@ -62,10 +47,4 @@ class _BottomNavigationState extends State<BottomNavigation> {
               .toList()),
     );
   }
-}
-
-class ItemMenu {
-  final IconData icon;
-  final int index;
-  const ItemMenu({Key? key, required this.icon, required this.index});
 }

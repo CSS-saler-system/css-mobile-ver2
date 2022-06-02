@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/dialog_widget.dart';
 import 'package:flutter_application_1/src/components/srceen_scrollview.dart';
 import 'package:flutter_application_1/src/components/toast_widget.dart';
 import 'package:flutter_application_1/src/configs/constants/app_router.dart';
@@ -26,7 +27,7 @@ class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
   @override
   Widget build(BuildContext context) {
     return ScrollViewBase(
-    appBarColor: Colors.transparent,
+      appBarColor: Colors.transparent,
       body: BlocProvider<LoginPhoneBloc>(
         create: (_) => getIt<LoginPhoneBloc>(),
         child: Container(
@@ -55,10 +56,17 @@ class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
     return BlocListener<LoginPhoneBloc, LoginPhoneState>(
       listener: (context, state) {
         if (state is VerifyOtpSuccess) {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
           Navigator.of(context).pushReplacementNamed(AppRouters.mainScreen);
         }
 
+        if (state is VerifyOtpLoading) {
+          DialogHelper.onLoading(context);
+        }
+
         if (state is VerifyOtpFailure) {
+          Navigator.of(context).pop();
           showErrorToast(context, state.error);
         }
       },
