@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.app.css.bee"
+        applicationId "com.dev.huy.css.bee"
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

@@ -31,7 +31,14 @@ class GetOtpLoginFailure extends LoginPhoneState {
 
 class VerifyOtpLoading extends LoginPhoneState {}
 
-class VerifyOtpSuccess extends LoginPhoneState {}
+class VerifyOtpSuccess extends LoginPhoneState {
+  final String firebaseToken;
+
+  const VerifyOtpSuccess({required this.firebaseToken});
+
+  @override
+  List<Object> get props => [firebaseToken];
+}
 
 class VerifyOtpFailure extends LoginPhoneState {
   final String error;
@@ -39,3 +46,9 @@ class VerifyOtpFailure extends LoginPhoneState {
   @override
   List<Object> get props => [error];
 }
+
+class LoginServerLoading extends LoginPhoneState {}
+
+class LoginServerSuccess extends LoginPhoneState {}
+
+class LoginServerFailure extends LoginPhoneState {}

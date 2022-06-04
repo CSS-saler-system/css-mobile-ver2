@@ -26,8 +26,6 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController? _phoneController = TextEditingController();
-  final GetOtpAuthUseCase _getOtpAuthUseCase =
-      GetOtpAuthUseCase(getIt<FirebaseAuthService>());
   @override
   Widget build(BuildContext context) {
     return ScrollViewBase(

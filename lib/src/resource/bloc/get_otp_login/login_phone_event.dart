@@ -26,3 +26,13 @@ class VerifyOtpLoginButtonPressed extends LoginPhoneEvent {
   @override
   List<Object> get props => [verificationId, otp];
 }
+
+
+class LoginServerEvent extends LoginPhoneEvent {
+  final String firebaseToken;
+
+  const LoginServerEvent({required this.firebaseToken});
+
+  @override
+  List<Object> get props => [firebaseToken];
+}

@@ -9,6 +9,7 @@ import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/presentations/otp_confirm/components/content_title.dart';
 import 'package:flutter_application_1/src/presentations/otp_confirm/components/pin_code_input.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_otp_login/login_phone_bloc.dart';
+import 'package:flutter_application_1/src/resource/repository/auth_reponsitory.dart';
 import 'package:flutter_application_1/src/resource/usecase/verify_otp_login.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +24,7 @@ class OtpConfirmScreen extends StatefulWidget {
 
 class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
   final VerifyOtpPhoneLogin _verifyOtpPhoneLogin = getIt<VerifyOtpPhoneLogin>();
+  final AuthRepository authRepository = getIt<AuthRepository>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +58,17 @@ class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
     return BlocListener<LoginPhoneBloc, LoginPhoneState>(
       listener: (context, state) {
         if (state is VerifyOtpSuccess) {
+          // bool status = aw authRepository.login(state.firebaseToken);
+        }
+
+        if (state is LoginServerSuccess) {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
           Navigator.of(context).pushReplacementNamed(AppRouters.mainScreen);
+        }
+
+        if (state is LoginServerFailure) {
+          showErrorToast(context, "Login is failed, please try again!");
         }
 
         if (state is VerifyOtpLoading) {

@@ -1,7 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/configs/configs.dart';
+import 'package:flutter_application_1/src/configs/di/injection.dart';
+import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
+import 'package:flutter_application_1/src/resource/response/login_response.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,12 +16,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final LocalRepository _localRepository = getIt<LocalRepository>();
+
   @override
   void initState() {
     super.initState();
+    _getLoginInfo();
+  }
+
+  Future<void> _getLoginInfo() async {
+    LoginResponse? loginInfo = await _localRepository.getLoginInfo();
     Timer(
       const Duration(seconds: 3),
-      () => Navigator.pushReplacementNamed(context, AppRouters.signIn),
+      () {
+        if (loginInfo != null) {
+          Navigator.pushReplacementNamed(context, AppRouters.mainScreen);
+        } else {
+          Navigator.pushReplacementNamed(context, AppRouters.signIn);
+        }
+      },
     );
   }
 
