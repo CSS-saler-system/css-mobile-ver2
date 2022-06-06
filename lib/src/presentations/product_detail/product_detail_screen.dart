@@ -93,9 +93,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         _buildProductName(product),
         const SizedBox(height: 20),
+
         _buildBrandName(product),
-        const SizedBox(height: 20),
-        ToggleButton(),
+        const SizedBox(height: 10),
+        _buildCategory(product),
+        const SizedBox(height: 10),
+        _buildDescription(product),
+        const SizedBox(height: 10),
+        _buildShortDescription(product),
+        const SizedBox(height: 10),
+        _buildDiscount(product),
+        const SizedBox(height: 30),
+        _buildButtonAction(product)
+        // ToggleButton(),
       ]),
     );
   }
@@ -124,23 +134,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildBrandName(ProductData product) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const CircleAvatar(
-          backgroundImage: AssetImage(AppImages.icApple),
-          radius: 15,
-        ),
-        const SizedBox(width: 10),
-        Text(
-          product.brand ?? "UNKNOWN",
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
+    return _buildItemRow(title: "Brand", name: product.brand ?? "UNKNOWN");
   }
 
   Widget _buildBackButton() {
@@ -161,6 +155,84 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildItemRow({required String title, String? name}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // const CircleAvatar(
+        //   backgroundImage: AssetImage(AppImages.icApple),
+        //   radius: 15,
+        // ),
+        Text("$title:"),
+        const SizedBox(width: 5),
+        Flexible(
+          child: Text(
+            name ?? "UNKNOWN",
+            softWrap: true,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _buildDescription(ProductData product) {
+    return _buildItemRow(title: "Description", name: product.description);
+  }
+
+  _buildCategory(ProductData product) {
+    return _buildItemRow(
+        title: "Category", name: product.category?.categoryName);
+  }
+
+  _buildShortDescription(ProductData product) {
+    return _buildItemRow(
+        title: "Short Description", name: product.shortDescription);
+  }
+
+  _buildDiscount(ProductData product) {
+    return _buildItemRow(
+        title: "Point Sale", name: product.pointSale?.toString());
+  }
+
+  Widget _buildButtonAction(ProductData product) {
+    return Container(
+      child: Row(children: [
+        Expanded(
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.orange,
+            ),
+            child: const Text("Request",
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
+        ),
+        const SizedBox(width: 20),
+        Expanded(
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(color: Colors.orange),
+            ),
+            child: const Text("Order",
+                style: TextStyle(
+                    color: Colors.orange, fontWeight: FontWeight.bold)),
+          ),
+        ),
+      ]),
     );
   }
 }
