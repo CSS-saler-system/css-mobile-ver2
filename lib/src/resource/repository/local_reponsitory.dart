@@ -7,6 +7,8 @@ abstract class LocalRepository {
   Future<void> saveLogin(LoginResponse loginResponse);
   Future<LoginResponse?> getLoginInfo();
   Future<String> getToken();
+  Future<void> deleteLoginInfo();
+  Future<String> getUserId();
 }
 
 class LocalRepositoryImpl implements LocalRepository {
@@ -34,5 +36,16 @@ class LocalRepositoryImpl implements LocalRepository {
   Future<String> getToken() async {
     LoginResponse? loginResponse = await getLoginInfo();
     return "Bearer " + (loginResponse?.jwt_token ?? "");
+  }
+
+  @override
+  Future<void> deleteLoginInfo() async {
+    await _sharedPreferences.remove("user");
+  }
+
+  @override
+  Future<String> getUserId() async {
+    LoginResponse? loginResponse = await getLoginInfo();
+    return loginResponse?.id ?? "";
   }
 }

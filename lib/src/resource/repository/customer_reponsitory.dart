@@ -26,21 +26,23 @@ class CustomerRepositoryImpl implements CustomerRepository {
       CreateCustomerRequest request) async {
     try {
       final token = await _localRepository.getToken();
-
+      final userId = await _localRepository.getUserId();
       final data = {
         "name": request.name,
         "phone": request.phone,
         "address": request.address,
         "description": request.description,
         "dob": request.dob,
-        "accountCreator": {"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"}
+        "accountCreator": {"id": userId}
       };
 
       final response = await _dataService.createCustomer(token, data);
       return Right(response);
     } on DioError catch (e) {
-      log("Header" + jsonEncode(e.response!.data));
-      return Left(ErrorHandler.handle(e).failure);
+      Map<String, dynamic> data = json.decode(e.response!.data);
+      Failure failure = ErrorHandler.handle(e).failure;
+      failure.message = data["message"];
+      return Left(failure);
     }
   }
 
@@ -51,7 +53,6 @@ class CustomerRepositoryImpl implements CustomerRepository {
       List<CustomerData> customers = await _dataService.getCustomers(token);
       return Right(customers);
     } on DioError catch (e) {
-      log("Response" + jsonEncode(e.response!.data));
       return Left(ErrorHandler.handle(e).failure);
     }
   }

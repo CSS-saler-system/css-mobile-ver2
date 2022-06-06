@@ -13,12 +13,14 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
       role: (json['role'] as List<dynamic>?)
           ?.map((e) => RoleObject.fromJson(e as Map<String, dynamic>))
           .toList(),
+      id: json['id'] as String?,
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
     <String, dynamic>{
       'jwt_token': instance.jwt_token,
       'phone': instance.phone,
+      'id': instance.id,
       'role': instance.role,
     };
 

@@ -5,4 +5,5 @@ class AppImages {
   static const String icCoin = 'assets/icons/ic_coin.png';
   static const String icApple = 'assets/icons/ic_apple.png';
   static const String iphone12 = 'assets/images/inphone_12.jpeg';
+  static const String imageBase = 'assets/images/bg_detail_base.jpeg';
 }

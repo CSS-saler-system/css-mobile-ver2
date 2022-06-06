@@ -6,7 +6,9 @@ import 'package:flutter_application_1/src/components/custom_input.dart';
 import 'package:flutter_application_1/src/components/custom_textarea_input.dart';
 import 'package:flutter_application_1/src/components/dialog_widget.dart';
 import 'package:flutter_application_1/src/components/srceen_scrollview.dart';
+import 'package:flutter_application_1/src/configs/constants/app_router.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
+import 'package:flutter_application_1/src/presentations/main/main_screen.dart';
 import 'package:flutter_application_1/src/resource/bloc/create_customer_bloc/create_customer_bloc_bloc.dart';
 import 'package:flutter_application_1/src/resource/usecase/create_customer_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,7 +111,7 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
 
           if (state is CreateCustomerSuccess) {
             DialogHelper.hideLoading(context);
-            log("CreateCustomerSuccess" + state.customerId);
+            Navigator.pushReplacementNamed(context, AppRouters.customerScreen);
           }
 
           if (state is CreateCustomerFailure) {
@@ -119,17 +121,16 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
         },
         child: BlocBuilder<CreateCustomerBlocBloc, CreateCustomerBlocState>(
           builder: (context, state) {
-              return CustomButton(
-                onPressed: () =>
-                    BlocProvider.of<CreateCustomerBlocBloc>(context).add(
-                        CreateCustomerOnPressed(CreateCustomerInput(
-                            name: _fullnameController.text,
-                            phone: _phoneNumberController.text,
-                            dob: _birthdayController.text,
-                            address: _addressController.text,
-                            description: _descriptionController.text))),
-                text: "Save",
-              );
+            return CustomButton(
+              onPressed: () => BlocProvider.of<CreateCustomerBlocBloc>(context)
+                  .add(CreateCustomerOnPressed(CreateCustomerInput(
+                      name: _fullnameController.text,
+                      phone: _phoneNumberController.text,
+                      dob: _birthdayController.text,
+                      address: _addressController.text,
+                      description: _descriptionController.text))),
+              text: "Save",
+            );
           },
         ),
       ),

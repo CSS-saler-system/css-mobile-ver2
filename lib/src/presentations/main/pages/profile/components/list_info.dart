@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/di/injection.dart';
+import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
 
 import '../../../../../configs/configs.dart';
 
@@ -10,6 +12,8 @@ class ListInformationWidget extends StatefulWidget {
 }
 
 class _ListInformationWidgetState extends State<ListInformationWidget> {
+  final LocalRepository _localRepository = getIt<LocalRepository>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,12 +51,17 @@ class _ListInformationWidgetState extends State<ListInformationWidget> {
             color: Colors.orange,
             borderRadius: BorderRadius.circular(5),
           ),
-          child: const ListTile(
-            leading: Icon(
+          child: ListTile(
+            onTap: () {
+              _localRepository.deleteLoginInfo();
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppRouters.signIn, (route) => false);
+            },
+            leading: const Icon(
               Icons.exit_to_app,
               color: Colors.white,
             ),
-            title: Text("Logout", style: TextStyle(color: Colors.white)),
+            title: const Text("Logout", style: TextStyle(color: Colors.white)),
           ),
         ),
       ]),

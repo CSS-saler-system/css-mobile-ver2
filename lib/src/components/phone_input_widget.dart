@@ -21,10 +21,11 @@ class _PhoneInputWidgetState extends State<PhoneInputWidget> {
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
-            "+84",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          // child: Text(
+          //   "+84",
+          //   style: TextStyle(fontWeight: FontWeight.bold),
+          // ),
+          child: Icon(Icons.phone_android_outlined),
         ),
         const SizedBox(width: 5),
         Expanded(

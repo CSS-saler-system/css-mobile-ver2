@@ -6,12 +6,14 @@ part 'login_response.g.dart';
 class LoginResponse {
   String? jwt_token;
   String? phone;
+  String? id;
   List<RoleObject>? role;
 
   LoginResponse({
     this.jwt_token,
     this.phone,
     this.role,
+    this.id,
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
@@ -21,14 +23,15 @@ class LoginResponse {
 }
 
 @JsonSerializable()
-class RoleObject{
+class RoleObject {
   String? authority;
 
   RoleObject({
     this.authority,
   });
 
-  factory RoleObject.fromJson(Map<String, dynamic> json) => _$RoleObjectFromJson(json);
+  factory RoleObject.fromJson(Map<String, dynamic> json) =>
+      _$RoleObjectFromJson(json);
 
   Map<String, dynamic> toJson() => _$RoleObjectToJson(this);
 }

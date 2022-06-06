@@ -49,6 +49,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
+    // log("setState" + _pageIndex.toString());
+    // if (widget.pageIndex != null) {
+    //   _pageIndex = widget.pageIndex!;
+    //   onChangePage(_pageIndex);
+    // }
   }
 
   @override

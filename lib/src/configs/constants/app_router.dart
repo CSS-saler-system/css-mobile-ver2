@@ -27,7 +27,8 @@ class AppRouters {
       case signIn:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
       case mainScreen:
-        return MaterialPageRoute(builder: (_) => const MainScreen());
+        return MaterialPageRoute(
+            builder: (_) => MainScreen(pageIndex: arguments["pageIndex"]));
       case otpConfirm:
         return MaterialPageRoute(
             builder: (_) => const OtpConfirmScreen(verificationId: ""));

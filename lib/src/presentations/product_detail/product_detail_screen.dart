@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/custom_gallery.dart';
 import 'package:flutter_application_1/src/components/switch_button_widget.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/presentations/full_page_loading/fullpage_loading.dart';
@@ -21,6 +22,13 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final GetProductsBloc _getProductsBloc = getIt<GetProductsBloc>();
 
+  List<String> images = [
+    AppImages.iphone12,
+    AppImages.imageBase,
+    AppImages.iphone12,
+    AppImages.bgSignIn,
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +47,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           if (state is GetProductDetailLoaded) {
             return Scaffold(
               body: Stack(children: [
+                CustomGallery(
+                    height: MediaQuery.of(context).size.height * .5,
+                    images: images),
+                _buildBackButton(),
                 DraggableScrollableSheet(
                     initialChildSize: 0.5,
                     minChildSize: 0.5,
@@ -128,6 +140,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildBackButton() {
+    return GestureDetector(
+      onTap: () => Navigator.pop(context),
+      child: Container(
+        width: 40,
+        height: 40,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: Colors.orange.withOpacity(.5),
+            borderRadius: BorderRadius.circular(5)),
+        margin: const EdgeInsets.only(top: 50, left: 20),
+        child: const Center(
+          child: Icon(
+            Icons.arrow_back_ios,
+            size: 22,
+          ),
+        ),
+      ),
     );
   }
 }
