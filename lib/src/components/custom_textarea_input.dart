@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class CustomInputWidget extends StatefulWidget {
-  String? label;
-  TextEditingController? controller;
-  bool textRequired;
-  CustomInputWidget(
+class CustomTextAreaInput extends StatefulWidget {
+  final String? label;
+  final TextEditingController? controller;
+  final bool textRequired;
+  const CustomTextAreaInput(
       {Key? key, this.controller, this.label, this.textRequired = false})
       : super(key: key);
 
   @override
-  State<CustomInputWidget> createState() => _CustomInputWidgetState();
+  State<CustomTextAreaInput> createState() => _CustomInputWidgetState();
 }
 
-class _CustomInputWidgetState extends State<CustomInputWidget> {
+class _CustomInputWidgetState extends State<CustomTextAreaInput> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -37,6 +37,8 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
         shadowColor: Colors.black12,
         child: TextFormField(
           controller: widget.controller,
+          minLines: 2,
+          maxLines: 8,
           decoration: const InputDecoration(
             isDense: true,
             border: InputBorder.none,

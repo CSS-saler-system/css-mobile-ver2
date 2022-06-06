@@ -13,13 +13,13 @@ class _FormEditProfileState extends State<FormEditProfile> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 20),
-      child: Column(children: const [
+      child: Column(children: [
         CustomInputWidget(label: "Full name", textRequired: true),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         CustomInputWidget(label: "Phone Number", textRequired: true),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         CustomInputWidget(label: "Email"),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         CustomInputWidget(label: "Address"),
       ]),
     );

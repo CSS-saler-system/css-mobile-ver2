@@ -22,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
       LoginResponse response = await _dataService.login(firebaseToken);
       _localRepository.saveLogin(response);
       return true;
-    } on DioError catch (e) {
+    }catch (e) {
       return false;
     }
   }

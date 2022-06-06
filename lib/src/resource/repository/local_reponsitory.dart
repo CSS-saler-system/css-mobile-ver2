@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class LocalRepository {
   Future<void> saveLogin(LoginResponse loginResponse);
   Future<LoginResponse?> getLoginInfo();
+  Future<String> getToken();
 }
 
 class LocalRepositoryImpl implements LocalRepository {
@@ -27,5 +28,11 @@ class LocalRepositoryImpl implements LocalRepository {
         ? LoginResponse.fromJson(jsonDecode(userString))
         : null;
     return loginResponse;
+  }
+
+  @override
+  Future<String> getToken() async {
+    LoginResponse? loginResponse = await getLoginInfo();
+    return "Bearer " + (loginResponse?.jwt_token ?? "");
   }
 }
