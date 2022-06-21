@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
 
@@ -24,7 +25,12 @@ class _ListInformationWidgetState extends State<ListInformationWidget> {
           onTap: () => Navigator.pushNamed(context, AppRouters.editProfile),
           child: const ListTile(
             leading: Icon(Icons.account_circle_outlined),
-            title: Text("Profile"),
+            title: Text(
+              "Profile",
+              style: TextStyle(
+                color: AppColors.textcolor,
+              ),
+            ),
           ),
         ),
         const Divider(),
@@ -32,23 +38,38 @@ class _ListInformationWidgetState extends State<ListInformationWidget> {
           onTap: () => Navigator.pushNamed(context, AppRouters.customerScreen),
           child: const ListTile(
             leading: Icon(Icons.group_outlined),
-            title: Text('Customer'),
+            title: Text(
+              'Customer',
+              style: TextStyle(
+                color: AppColors.textcolor,
+              ),
+            ),
           ),
         ),
         const Divider(),
         const ListTile(
           leading: Icon(Icons.local_grocery_store_outlined),
-          title: Text("My orders"),
+          title: Text(
+            "My orders",
+            style: TextStyle(
+              color: AppColors.textcolor,
+            ),
+          ),
         ),
         const Divider(),
         const ListTile(
           leading: Icon(Icons.settings),
-          title: Text("My orders"),
+          title: Text(
+            "Settings",
+            style: TextStyle(
+              color: AppColors.textcolor,
+            ),
+          ),
         ),
         const Divider(),
         Container(
           decoration: BoxDecoration(
-            color: Colors.orange,
+            color: AppColors.primarycolor,
             borderRadius: BorderRadius.circular(5),
           ),
           child: ListTile(

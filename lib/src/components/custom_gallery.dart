@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/configs/constants/app_images.dart';
 
 class CustomGallery extends StatefulWidget {
@@ -61,7 +62,7 @@ class _CustomGalleryState extends State<CustomGallery> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                     color: _currentIndex == index
-                        ? Colors.orange
+                        ? AppColors.primarycolor
                         : Colors.transparent,
                   ),
                 ),

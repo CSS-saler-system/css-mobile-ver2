@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/custom_gallery.dart';
 import 'package:flutter_application_1/src/components/switch_button_widget.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/presentations/full_page_loading/fullpage_loading.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_products/get_products_bloc.dart';
@@ -126,7 +127,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.orange,
+            color: AppColors.primarycolor,
           ),
         ),
       ],
@@ -145,7 +146,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         height: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: Colors.orange.withOpacity(.5),
+            color: AppColors.primarycolor.withOpacity(.5),
             borderRadius: BorderRadius.circular(5)),
         margin: const EdgeInsets.only(top: 50, left: 20),
         child: const Center(
@@ -211,7 +212,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: Colors.orange,
+              color: AppColors.primarycolor,
             ),
             child: const Text("Request",
                 style: TextStyle(
@@ -225,11 +226,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: Colors.orange),
+              border: Border.all(color: AppColors.primarycolor),
             ),
             child: const Text("Order",
                 style: TextStyle(
-                    color: Colors.orange, fontWeight: FontWeight.bold)),
+                    color: AppColors.primarycolor,
+                    fontWeight: FontWeight.bold)),
           ),
         ),
       ]),

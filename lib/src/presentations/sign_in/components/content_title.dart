@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/configs/configs.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 
 class ContentTitle extends StatelessWidget {
   const ContentTitle({Key? key}) : super(key: key);
@@ -27,6 +28,7 @@ class ContentTitle extends StatelessWidget {
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
+          color: AppColors.textcolor,
         ),
       ),
     );

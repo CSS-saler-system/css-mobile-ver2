@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/configs/constants/app_images.dart';
 
 class FullPageLoading extends StatelessWidget {
@@ -15,7 +16,7 @@ class FullPageLoading extends StatelessWidget {
           const SizedBox(
               height: 25,
               width: 25,
-              child: CircularProgressIndicator(color: Colors.orange)),
+              child: CircularProgressIndicator(color: AppColors.primarycolor)),
         ],
       ),
     );

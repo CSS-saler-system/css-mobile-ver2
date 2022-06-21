@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 
 class ToggleButton extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _ToggleButtonState extends State<ToggleButton> {
               width: width * 0.5,
               height: height,
               decoration: const BoxDecoration(
-                color: Colors.orange,
+                color: AppColors.primarycolor,
                 borderRadius: BorderRadius.all(
                   Radius.circular(50.0),
                 ),

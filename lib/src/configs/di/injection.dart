@@ -10,6 +10,7 @@ import 'package:flutter_application_1/src/resource/repository/product_repository
 import 'package:flutter_application_1/src/resource/services/data_service.dart';
 import 'package:flutter_application_1/src/resource/services/firebase_auth.dart';
 import 'package:flutter_application_1/src/resource/usecase/create_customer_usecase.dart';
+import 'package:flutter_application_1/src/resource/usecase/get_customer_detail_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_list_customer_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_otp_auth_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_product_detail_usecase.dart';
@@ -39,6 +40,7 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => GetProductsUseCase(getIt()));
   getIt.registerLazySingleton(() => GetCustomersUseCase(getIt()));
   getIt.registerLazySingleton(() => GetProductDetailUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetCustomerDetailUseCase(getIt()));
 
   // FIREBASE_SERVICE
   getIt.registerLazySingleton<FirebaseAuthService>(
@@ -48,7 +50,7 @@ Future<void> configureDependencies() async {
   getIt.registerFactory(() => LoginPhoneBloc(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => CreateCustomerBlocBloc(getIt()));
   getIt.registerFactory(() => GetProductsBloc(getIt(), getIt()));
-  getIt.registerFactory(() => CustomerBloc(getIt()));
+  getIt.registerFactory(() => CustomerBloc(getIt(), getIt()));
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(

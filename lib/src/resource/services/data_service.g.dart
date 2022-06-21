@@ -19,9 +19,12 @@ class _DataService implements DataService {
   String? baseUrl;
 
   @override
-  Future<LoginResponse> login(firebaseToken) async {
+  Future<LoginResponse> login(firebaseToken, registrationToken) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'firebaseToken': firebaseToken};
+    final queryParameters = <String, dynamic>{
+      r'loginToken': firebaseToken,
+      r'registrationToken': registrationToken
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -68,6 +71,41 @@ class _DataService implements DataService {
     var value = _result.data!
         .map((dynamic i) => CustomerData.fromJson(i as Map<String, dynamic>))
         .toList();
+    return value;
+  }
+
+  @override
+  Future<CustomerData> getCustomer(token, id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CustomerData>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'customer/get/${id}',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CustomerData.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<String> updateCustomer(token, request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = request;
+    final _result = await _dio.fetch<String>(_setStreamType<String>(
+        Options(method: 'PUT', headers: _headers, extra: _extra)
+            .compose(_dio.options, 'customer/update',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
     return value;
   }
 

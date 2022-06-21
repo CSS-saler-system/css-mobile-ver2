@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 
 import '../../../../../components/list_action_hedaer.dart';
 import '../../../../../configs/configs.dart';
@@ -19,7 +20,8 @@ class _PopularProductsState extends State<PopularProducts> {
         children: [
           ListActionHeader(
             title: "Popular Products",
-            onPressed: () {},
+            onPressed: () =>
+                Navigator.pushNamed(context, AppRouters.listProduct),
           ),
           const SizedBox(height: 20),
           Expanded(
@@ -60,7 +62,7 @@ class _PopularProductsState extends State<PopularProducts> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.orange,
+                              color: AppColors.primarycolor,
                             ),
                           ),
                         ]),

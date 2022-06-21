@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomInputWidget extends StatefulWidget {
-  String? label;
-  TextEditingController? controller;
-  bool textRequired;
-  CustomInputWidget(
-      {Key? key, this.controller, this.label, this.textRequired = false})
+  final String? Function(String?)? validation;
+  final String? label;
+  final TextEditingController? controller;
+  final bool textRequired;
+  const CustomInputWidget(
+      {Key? key,
+      this.controller,
+      this.label,
+      this.textRequired = false,
+      this.validation})
       : super(key: key);
 
   @override
@@ -36,6 +41,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
         elevation: 3,
         shadowColor: Colors.black12,
         child: TextFormField(
+          validator: widget.validation,
           controller: widget.controller,
           decoration: const InputDecoration(
             isDense: true,

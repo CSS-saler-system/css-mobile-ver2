@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/button_error.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/home/components/action_header.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/home/components/list_brands.dart';
@@ -94,7 +95,6 @@ class _HomePageState extends State<HomePage> {
             }
 
             if (state is GetProductsLoadMoreLoaded) {
-              log('Load more + ${state.products.length}');
               productSell.addAll(state.products);
 
               setState(() {
@@ -113,7 +113,11 @@ class _HomePageState extends State<HomePage> {
                 return SellTodayProducts(products: productSell);
               }
 
-              return const Center(child: Text('Error'));
+              return Center(
+                  child: ButtonError(
+                      onPressed: () => _getProductsBloc.add(GetProductsEventGet(
+                          request: GetListProductRequest(
+                              page: 1, pageSize: _pageSize)))));
             },
           ),
         ),

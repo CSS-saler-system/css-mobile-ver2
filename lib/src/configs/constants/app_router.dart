@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/presentations/edit_customer/edit_customer_screen.dart';
 import 'package:flutter_application_1/src/presentations/main/main_screen.dart';
 import 'package:flutter_application_1/src/presentations/sign_in/sign_in_screen.dart';
 
@@ -20,6 +21,7 @@ class AppRouters {
   static const String productDetail = "/product_detail";
   static const String orderDetail = "/order_detail";
   static const String listProduct = "/list_product";
+  static const String editCustomerScreen = "/edit_customer_screen";
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Map arguments =
         settings.arguments != null ? (settings.arguments as Map) : {};
@@ -47,6 +49,10 @@ class AppRouters {
                 ProductDetailScreen(productId: arguments["productId"]));
       case listProduct:
         return MaterialPageRoute(builder: (_) => const ListProductScreen());
+      case editCustomerScreen:
+        return MaterialPageRoute(
+            builder: (_) =>
+                EditCustomerScreen(customerId: arguments["customerId"]));
       default:
         return animRoute(
             Center(child: Text('No route defined for ${settings.name}')),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/dialog_widget.dart';
 import 'package:flutter_application_1/src/components/srceen_scrollview.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_application_1/src/presentations/otp_confirm/components/c
 import 'package:flutter_application_1/src/presentations/otp_confirm/components/pin_code_input.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_otp_login/login_phone_bloc.dart';
 import 'package:flutter_application_1/src/resource/repository/auth_reponsitory.dart';
-import 'package:flutter_application_1/src/resource/usecase/verify_otp_login.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OtpConfirmScreen extends StatefulWidget {
@@ -23,8 +23,19 @@ class OtpConfirmScreen extends StatefulWidget {
 }
 
 class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
-  final VerifyOtpPhoneLogin _verifyOtpPhoneLogin = getIt<VerifyOtpPhoneLogin>();
   final AuthRepository authRepository = getIt<AuthRepository>();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  String _registrationToken = '';
+
+  @override
+  void initState() {
+    super.initState();
+    log('setState');
+    _firebaseMessaging.getToken().then((token) {
+      _registrationToken = token ?? "";
+      log("OtpConfirmScreen token: $token");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +43,23 @@ class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
       appBarColor: Colors.transparent,
       body: BlocProvider<LoginPhoneBloc>(
         create: (_) => getIt<LoginPhoneBloc>(),
-        child: Container(
-            margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                _buildContentTitle(),
-                const SizedBox(height: 20),
-                _buildPinCodeInput(),
-              ],
-            )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const BackButton(),
+            Container(
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.1),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    _buildContentTitle(),
+                    const SizedBox(height: 20),
+                    _buildPinCodeInput(),
+                  ],
+                )),
+          ],
+        ),
       ),
     );
   }
@@ -68,6 +85,7 @@ class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
         }
 
         if (state is LoginServerFailure) {
+          Navigator.of(context).pop();
           showErrorToast(context, "Login is failed, please try again!");
         }
 
@@ -88,6 +106,7 @@ class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
               onCompleted: (value) async {
                 BlocProvider.of<LoginPhoneBloc>(context).add(
                     VerifyOtpLoginButtonPressed(
+                        registrationToken: _registrationToken,
                         verificationId: widget.verificationId,
                         otp: value ?? ""));
                 // bool result = await _verifyOtpPhoneLogin.execute(

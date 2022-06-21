@@ -22,3 +22,17 @@ class CustomerError extends CustomerState {
 
   const CustomerError({required this.failure});
 }
+
+class GetCustomerDetailLoading extends CustomerState {}
+
+class GetCustomerDetailLoaded extends CustomerState {
+  final CustomerData customer;
+
+  const GetCustomerDetailLoaded({required this.customer});
+}
+
+class GetCustomerDetailError extends CustomerState {
+  final Failure failure;
+
+  const GetCustomerDetailError({required this.failure});
+}

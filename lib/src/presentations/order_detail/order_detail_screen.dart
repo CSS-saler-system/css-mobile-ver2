@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/presentations/order_detail/components/customer_order_info.dart';
 import 'package:flutter_application_1/src/presentations/order_detail/components/total_order_info.dart';
 
@@ -22,7 +23,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         elevation: 2,
-        backgroundColor: Colors.orange,
+        backgroundColor: AppColors.primarycolor,
         centerTitle: true,
         title: const Text('Order Detail'),
       ),

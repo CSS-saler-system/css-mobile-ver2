@@ -13,3 +13,12 @@ class GetListCustomer extends CustomerEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetCustomerDetailEvent extends CustomerEvent {
+  final String customerId;
+
+  const GetCustomerDetailEvent(this.customerId);
+
+  @override
+  List<Object> get props => [customerId];
+}

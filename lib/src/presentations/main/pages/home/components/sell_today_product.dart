@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/list_action_hedaer.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/resource/response/product_response.dart';
 
 import '../../../../../configs/configs.dart';
@@ -48,7 +49,7 @@ class _SellTodayProductsState extends State<SellTodayProducts> {
                           children: [
                             SizedBox(
                               height: 100,
-                              child: widget.products[index].image!.length <= 0
+                              child: widget.products[index].image!.isEmpty
                                   ? Image.asset(AppImages.iphone12)
                                   : Image.network(
                                       widget.products[index].image![0].path ??
@@ -72,7 +73,7 @@ class _SellTodayProductsState extends State<SellTodayProducts> {
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.orange,
+                                color: AppColors.primarycolor,
                               ),
                             ),
                           ]),

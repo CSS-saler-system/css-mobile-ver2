@@ -9,6 +9,7 @@ class CustomerData {
   final String? address;
   final String? dob;
   final String? description;
+  final String? phone;
 
   const CustomerData({
     this.id,
@@ -16,6 +17,7 @@ class CustomerData {
     this.address,
     this.dob,
     this.description,
+    this.phone,
   });
 
   factory CustomerData.fromJson(Map<String, dynamic> json) =>

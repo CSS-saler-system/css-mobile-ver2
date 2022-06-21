@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 
 class ListActionHeader extends StatefulWidget {
   final String? title;
@@ -20,7 +21,7 @@ class _ListActionHeaderState extends State<ListActionHeader> {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: AppColors.textcolor,
           ),
         ),
         GestureDetector(
@@ -30,9 +31,10 @@ class _ListActionHeaderState extends State<ListActionHeader> {
             child: const Text(
               "See all",
               style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.orange),
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primarycolor,
+              ),
             ),
           ),
         )

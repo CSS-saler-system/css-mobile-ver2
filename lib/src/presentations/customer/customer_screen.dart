@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/components/srceen_scrollview.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/configs/constants/app_router.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/resource/bloc/customer_bloc/customer_bloc.dart';
@@ -34,7 +35,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.light,
         ),
-        backgroundColor: Colors.orange,
+        backgroundColor: AppColors.primarycolor,
         elevation: 1,
         leading: Container(
           margin: const EdgeInsets.only(top: 10, left: 20),
@@ -83,7 +84,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
           Navigator.of(context).pushNamed(AppRouters.createCustomerScreen),
       child: const Text(
         "+ Add new customer",
-        style: TextStyle(color: Colors.orange),
+        style: TextStyle(color: AppColors.primarycolor),
       ),
     );
   }
@@ -99,14 +100,19 @@ class _CustomerScreenState extends State<CustomerScreen> {
               itemCount: state.customers.length,
               itemBuilder: (context, index) {
                 final customer = state.customers[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(customer.name ?? ""),
-                    subtitle: Text(customer.dob ?? ""),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    // onTap: () => Navigator.of(context).pushNamed(
-                    //     AppRouters.detailCustomerScreen,
-                    //     arguments: customer),
+                return GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed(
+                      AppRouters.editCustomerScreen,
+                      arguments: {"customerId": customer.id}),
+                  child: Card(
+                    child: ListTile(
+                      title: Text(customer.name ?? ""),
+                      subtitle: Text(customer.dob ?? ""),
+                      trailing: const Icon(Icons.keyboard_arrow_right),
+                      // onTap: () => Navigator.of(context).pushNamed(
+                      //     AppRouters.detailCustomerScreen,
+                      //     arguments: customer),
+                    ),
                   ),
                 );
               },

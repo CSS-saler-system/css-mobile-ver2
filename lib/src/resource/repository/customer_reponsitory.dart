@@ -13,6 +13,7 @@ import 'package:flutter_application_1/src/resource/services/data_service.dart';
 abstract class CustomerRepository {
   Future<Either<Failure, String>> createCustomer(CreateCustomerRequest request);
   Future<Either<Failure, List<CustomerData>>> getCustomers();
+  Future<Either<Failure, CustomerData>> getCustomer(String id);
 }
 
 class CustomerRepositoryImpl implements CustomerRepository {
@@ -53,6 +54,18 @@ class CustomerRepositoryImpl implements CustomerRepository {
       List<CustomerData> customers = await _dataService.getCustomers(token);
       return Right(customers);
     } on DioError catch (e) {
+      return Left(ErrorHandler.handle(e).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, CustomerData>> getCustomer(String id) async {
+    try {
+      final token = await _localRepository.getToken();
+      CustomerData customer = await _dataService.getCustomer(token, id);
+      return Right(customer);
+    } on DioError catch (e) {
+      log("getCustomer: ${e.response?.data}");
       return Left(ErrorHandler.handle(e).failure);
     }
   }

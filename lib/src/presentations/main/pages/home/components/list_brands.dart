@@ -21,7 +21,8 @@ class _ListBrandWidgetState extends State<ListBrandWidget> {
           ListActionHeader(
             title: "Brands",
             onPressed: () =>
-                Navigator.pushNamed(context, AppRouters.listProduct),
+                // Navigator.pushNamed(context, AppRouters.listProduct),
+                {}
           ),
           const SizedBox(height: 20),
           Expanded(

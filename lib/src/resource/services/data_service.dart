@@ -12,7 +12,10 @@ abstract class DataService {
   factory DataService(Dio dio) = _DataService;
 
   @POST("login")
-  Future<LoginResponse> login(@Query("firebaseToken") String firebaseToken);
+  Future<LoginResponse> login(@Query("loginToken") String firebaseToken,
+      @Query("registrationToken") String registrationToken);
+
+// CUSTOMER
 
   @POST('customer/new')
   Future<String> createCustomer(
@@ -20,6 +23,18 @@ abstract class DataService {
   @GET("customer/list")
   Future<List<CustomerData>> getCustomers(
       @Header("Authorization") String? token);
+
+  @GET("customer/get/{customerId}")
+  Future<CustomerData> getCustomer(
+      @Header("Authorization") String? token, @Path("customerId") String id);
+
+  @PUT("customer/update")
+  Future<String> updateCustomer(
+      @Header("Authorization") String? token, @Body() dynamic request);
+
+// END CUSTOMER
+
+// PRODUCT
 
   @GET("product/list")
   Future<ListProductResponse> getProducts(

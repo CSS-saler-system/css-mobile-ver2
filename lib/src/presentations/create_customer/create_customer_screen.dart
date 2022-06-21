@@ -11,6 +11,7 @@ import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/presentations/main/main_screen.dart';
 import 'package:flutter_application_1/src/resource/bloc/create_customer_bloc/create_customer_bloc_bloc.dart';
 import 'package:flutter_application_1/src/resource/usecase/create_customer_usecase.dart';
+import 'package:flutter_application_1/src/utils/validation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateCustomerScreen extends StatefulWidget {
@@ -26,6 +27,8 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
       _addressController,
       _birthdayController,
       _descriptionController;
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -68,15 +71,19 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
 
   Widget _buildForm() {
     return Form(
+      key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomInputWidget(
             controller: _fullnameController,
             label: "Full Name",
+            validation: (value) => AppValidations.required(value),
           ),
           const SizedBox(height: 15),
           CustomInputWidget(
+            validation: (value) => AppValidations.validatePhoneNumber(value),
             controller: _phoneNumberController,
             label: "Phone Number",
           ),
@@ -84,16 +91,19 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
           CustomInputWidget(
             controller: _addressController,
             label: "Address",
+            validation: (value) => AppValidations.required(value),
           ),
           const SizedBox(height: 15),
           CustomInputWidget(
             controller: _birthdayController,
             label: "Birthday",
+            validation: (value) => AppValidations.required(value),
           ),
           const SizedBox(height: 15),
           CustomTextAreaInput(
             controller: _descriptionController,
             label: "Description",
+            validation: (value) => AppValidations.required(value),
           )
         ],
       ),
@@ -122,13 +132,17 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
         child: BlocBuilder<CreateCustomerBlocBloc, CreateCustomerBlocState>(
           builder: (context, state) {
             return CustomButton(
-              onPressed: () => BlocProvider.of<CreateCustomerBlocBloc>(context)
-                  .add(CreateCustomerOnPressed(CreateCustomerInput(
-                      name: _fullnameController.text,
-                      phone: _phoneNumberController.text,
-                      dob: _birthdayController.text,
-                      address: _addressController.text,
-                      description: _descriptionController.text))),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  BlocProvider.of<CreateCustomerBlocBloc>(context).add(
+                      CreateCustomerOnPressed(CreateCustomerInput(
+                          name: _fullnameController.text,
+                          phone: _phoneNumberController.text,
+                          dob: _birthdayController.text,
+                          address: _addressController.text,
+                          description: _descriptionController.text)));
+                }
+              },
               text: "Save",
             );
           },

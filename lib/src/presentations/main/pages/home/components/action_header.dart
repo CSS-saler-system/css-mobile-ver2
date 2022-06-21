@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/custom_icon_button.dart';
+import 'package:flutter_application_1/src/configs/constants/app_router.dart';
 
 class HomeHeaderAction extends StatefulWidget {
   const HomeHeaderAction({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _HeaderActionState extends State<HomeHeaderAction> {
   Widget _buildSearchIcon() {
     return CustomIconButton(
       icon: Icons.search,
-      onPressed: () {},
+      onPressed: () => Navigator.pushNamed(context, AppRouters.listProduct),
     );
   }
 

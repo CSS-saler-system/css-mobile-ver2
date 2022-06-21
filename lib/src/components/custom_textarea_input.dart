@@ -4,9 +4,14 @@ class CustomTextAreaInput extends StatefulWidget {
   final String? label;
   final TextEditingController? controller;
   final bool textRequired;
-  const CustomTextAreaInput(
-      {Key? key, this.controller, this.label, this.textRequired = false})
-      : super(key: key);
+  final String? Function(String?)? validation;
+  const CustomTextAreaInput({
+    Key? key,
+    this.controller,
+    this.label,
+    this.textRequired = false,
+    this.validation,
+  }) : super(key: key);
 
   @override
   State<CustomTextAreaInput> createState() => _CustomInputWidgetState();
@@ -36,6 +41,7 @@ class _CustomInputWidgetState extends State<CustomTextAreaInput> {
         elevation: 3,
         shadowColor: Colors.black12,
         child: TextFormField(
+          validator: widget.validation,
           controller: widget.controller,
           minLines: 2,
           maxLines: 8,

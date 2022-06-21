@@ -12,6 +12,7 @@ CustomerData _$CustomerDataFromJson(Map<String, dynamic> json) => CustomerData(
       address: json['address'] as String?,
       dob: json['dob'] as String?,
       description: json['description'] as String?,
+      phone: json['phone'] as String?,
     );
 
 Map<String, dynamic> _$CustomerDataToJson(CustomerData instance) =>
@@ -21,6 +22,7 @@ Map<String, dynamic> _$CustomerDataToJson(CustomerData instance) =>
       'address': instance.address,
       'dob': instance.dob,
       'description': instance.description,
+      'phone': instance.phone,
     };
 
 OrderData _$OrderDataFromJson(Map<String, dynamic> json) => OrderData(

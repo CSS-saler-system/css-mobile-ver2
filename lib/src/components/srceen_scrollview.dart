@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 
 class ScrollViewBase extends StatefulWidget {
   final Widget? body;
@@ -25,12 +26,14 @@ class _ScrollViewBaseState extends State<ScrollViewBase> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight:widget.appBarColor == Colors.transparent ? 0 : AppBar().preferredSize.height,
+        toolbarHeight: widget.appBarColor == Colors.transparent
+            ? 0
+            : AppBar().preferredSize.height,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.light,
         ),
-        backgroundColor: widget.appBarColor ?? Colors.orange,
+        backgroundColor: widget.appBarColor ?? AppColors.primarycolor,
         elevation: widget.appBarColor == Colors.transparent ? 0 : 1,
         leading: widget.backButton
             ? Container(

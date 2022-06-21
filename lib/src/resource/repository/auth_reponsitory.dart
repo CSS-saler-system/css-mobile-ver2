@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
@@ -7,7 +6,7 @@ import 'package:flutter_application_1/src/resource/response/login_response.dart'
 import 'package:flutter_application_1/src/resource/services/data_service.dart';
 
 abstract class AuthRepository {
-  Future<bool> login(String firebaseToken);
+  Future<bool> login(String firebaseToken, String registrationToken);
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -17,12 +16,15 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._dataService, this._localRepository);
 
   @override
-  Future<bool> login(String firebaseToken) async {
+  Future<bool> login(String firebaseToken, String registrationToken) async {
     try {
-      LoginResponse response = await _dataService.login(firebaseToken);
+      log('login: firebaseToken: $firebaseToken, registrationToken: $registrationToken');
+      LoginResponse response =
+          await _dataService.login(firebaseToken, registrationToken);
       _localRepository.saveLogin(response);
       return true;
-    }catch (e) {
+    } on DioError catch (e) {
+      log("Login error: ${e.response?.requestOptions.path}");
       return false;
     }
   }

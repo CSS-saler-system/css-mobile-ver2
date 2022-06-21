@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/presentations/main/components/navigator_item.dart';
 
 import '../main_screen.dart';
@@ -6,9 +7,12 @@ import '../main_screen.dart';
 class BottomNavigation extends StatefulWidget {
   final int? pageIndex;
   final Function(int) itemMenuClicked;
-  final List<ItemMenu> items; 
+  final List<ItemMenu> items;
   const BottomNavigation(
-      {Key? key, required this.pageIndex, required this.itemMenuClicked, required this.items})
+      {Key? key,
+      required this.pageIndex,
+      required this.itemMenuClicked,
+      required this.items})
       : super(key: key);
 
   @override
@@ -16,8 +20,6 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,8 +41,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     icon: Icon(
                       child.icon,
                       color: widget.items.indexOf(child) == widget.pageIndex
-                          ? Colors.orange
-                          : Colors.black,
+                          ? AppColors.primarycolor
+                          : AppColors.textcolor,
                     ),
                     onTap: () => widget.itemMenuClicked(child.index),
                   ))

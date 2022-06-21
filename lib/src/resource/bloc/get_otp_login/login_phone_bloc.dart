@@ -42,9 +42,12 @@ class LoginPhoneBloc extends Bloc<LoginPhoneEvent, LoginPhoneState> {
     String result = await _verifyOtpPhoneLogin
         .execute(VerifyOtpPhoneLoginInput(event.verificationId, event.otp));
     if (result.isNotEmpty) {
-      // emit(VerifyOtpSuccess(firebaseToken: result));
-      log("_verifyOtpLoginEvent" + result);
-      bool isLogin = await _loginUseCase.execute(LoginUseCaseInput(result));
+      bool isLogin = await _loginUseCase.execute(
+        LoginUseCaseInput(
+          firebaseToken: result,
+          registrationToken: event.registrationToken,
+        ),
+      );
       if (isLogin) {
         emit(LoginServerSuccess());
       } else {

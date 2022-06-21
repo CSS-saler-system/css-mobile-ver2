@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/home/home_page.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/orders/order_page.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/profile/profile_page.dart';
@@ -65,8 +66,9 @@ class _MainScreenState extends State<MainScreen> {
             : const SizedBox(),
         centerTitle: true,
         toolbarHeight: _items[_pageIndex].hasAppBar ? kToolbarHeight : 0,
-        backgroundColor:
-            _items[_pageIndex].hasAppBar ? Colors.orange : Colors.transparent,
+        backgroundColor: _items[_pageIndex].hasAppBar
+            ? AppColors.primarycolor
+            : Colors.transparent,
         elevation: _items[_pageIndex].hasAppBar ? 1 : 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,

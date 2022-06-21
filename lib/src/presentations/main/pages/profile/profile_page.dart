@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/configs/constants/app_images.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/profile/components/list_info.dart';
 
@@ -21,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(),
-              ListInformationWidget(),
+              const ListInformationWidget(),
             ]),
       ),
     );
@@ -52,12 +53,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
+                      color: AppColors.textcolor,
                     ),
                   ),
                   const Text(
                     'Page your profile',
                     style: TextStyle(
                       fontSize: 15,
+                      color: AppColors.textcolor,
                     ),
                   ),
                   const SizedBox(height: 10),

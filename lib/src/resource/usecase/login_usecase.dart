@@ -1,7 +1,5 @@
 import 'package:flutter_application_1/src/resource/repository/auth_reponsitory.dart';
-import 'package:flutter_application_1/src/resource/services/firebase_auth.dart';
 import 'base_usecase.dart';
-import 'package:injectable/injectable.dart';
 
 class LoginUseCase extends BaseUseCase<LoginUseCaseInput, bool> {
   final AuthRepository _repository;
@@ -10,12 +8,13 @@ class LoginUseCase extends BaseUseCase<LoginUseCaseInput, bool> {
 
   @override
   Future<bool> execute(LoginUseCaseInput input) async {
-    return await _repository.login(input.firebaseToken);
+    return await _repository.login(input.firebaseToken, input.registrationToken);
   }
 }
 
 class LoginUseCaseInput {
-  String firebaseToken;
+ final String firebaseToken;
+ final String registrationToken;
 
-  LoginUseCaseInput(this.firebaseToken);
+ const LoginUseCaseInput({required this.firebaseToken, required this.registrationToken});
 }

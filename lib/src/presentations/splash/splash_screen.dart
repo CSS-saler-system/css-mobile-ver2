@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/configs/configs.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
@@ -17,6 +18,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final LocalRepository _localRepository = getIt<LocalRepository>();
+  
 
   @override
   void initState() {
