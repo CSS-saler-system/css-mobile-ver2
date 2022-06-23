@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/button_error.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/home/components/action_header.dart';
+import 'package:flutter_application_1/src/presentations/main/pages/home/components/campings.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/home/components/list_brands.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/home/components/populars_product.dart';
 import 'package:flutter_application_1/src/presentations/main/pages/home/components/sell_today_product.dart';
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
             child: SingleChildScrollView(
           controller: _scrollController,
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            const ListBrandWidget(),
+            const Campings(),
             const SizedBox(height: 20),
             const PopularProducts(),
             const SizedBox(height: 20),

@@ -36,3 +36,5 @@ class GetCustomerDetailError extends CustomerState {
 
   const GetCustomerDetailError({required this.failure});
 }
+
+

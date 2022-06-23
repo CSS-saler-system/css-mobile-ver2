@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_application_1/src/configs/configs.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/presentations/splash/splash_screen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'src/configs/di/injection.dart';
@@ -41,6 +43,16 @@ Future<void> main() async {
   );
 
   await configureDependencies();
+
+  Dio dio = Dio();
+  dio.interceptors.add(PrettyDioLogger(
+    requestHeader: true,
+    requestBody: true,
+    responseBody: true,
+    responseHeader: false,
+    compact: false,
+  ));
+
   runApp(const MyApp());
 }
 

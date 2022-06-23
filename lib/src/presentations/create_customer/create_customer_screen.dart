@@ -52,6 +52,14 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
     _descriptionController.dispose();
   }
 
+  void _clearInput() {
+    _fullnameController.clear();
+    _phoneNumberController.clear();
+    _addressController.clear();
+    _birthdayController.clear();
+    _descriptionController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScrollViewBase(
@@ -115,18 +123,25 @@ class _CreateCustomerScreenState extends State<CreateCustomerScreen> {
       create: (context) => getIt<CreateCustomerBlocBloc>(),
       child: BlocListener<CreateCustomerBlocBloc, CreateCustomerBlocState>(
         listener: (context, state) {
+          FocusScope.of(context).unfocus();
           if (state is CreateCustomerBlocLoading) {
             DialogHelper.onLoading(context);
           }
 
           if (state is CreateCustomerSuccess) {
             DialogHelper.hideLoading(context);
-            Navigator.pushReplacementNamed(context, AppRouters.customerScreen);
+            DialogHelper.successAnimation(
+                context, "Create customer successfully!",
+                routerName: AppRouters.customerScreen);
           }
 
           if (state is CreateCustomerFailure) {
             DialogHelper.hideLoading(context);
-            DialogHelper.onError(context, state.failure.message);
+            DialogHelper.errorAnimation(
+              context,
+              "Create customer is fail, please try again!",
+              serverMessage: state.failure.message,
+            );
           }
         },
         child: BlocBuilder<CreateCustomerBlocBloc, CreateCustomerBlocState>(

@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/custom_gallery.dart';
+import 'package:flutter_application_1/src/components/dialog_widget.dart';
 import 'package:flutter_application_1/src/components/switch_button_widget.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/presentations/full_page_loading/fullpage_loading.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_products/get_products_bloc.dart';
+import 'package:flutter_application_1/src/resource/bloc/selling_bloc/selling_bloc_bloc.dart';
 import 'package:flutter_application_1/src/resource/response/product_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../src/resource/extension/number.dart';
@@ -22,6 +24,7 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final GetProductsBloc _getProductsBloc = getIt<GetProductsBloc>();
+  final SellingBlocBloc _sellingBloc = getIt<SellingBlocBloc>();
 
   List<String> images = [
     AppImages.iphone12,
@@ -33,8 +36,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   void initState() {
     super.initState();
-
     if (widget.productId != null && widget.productId!.isNotEmpty) {
+      log(widget.productId!);
       _getProductsBloc.add(GetProductDetailEvent(productId: widget.productId!));
     }
   }
@@ -204,37 +207,62 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildButtonAction(ProductData product) {
-    return Container(
-      child: Row(children: [
-        Expanded(
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: AppColors.primarycolor,
+    return BlocProvider(
+      create: (context) => _sellingBloc,
+      child: BlocListener<SellingBlocBloc, SellingBlocState>(
+        listener: (context, state) {
+          log("create_selling_state $state");
+          if (state is CreateSellingLoading) {
+            DialogHelper.onLoading(context);
+          }
+
+          if (state is CreateSellingError) {
+            DialogHelper.hideLoading(context);
+            DialogHelper.errorAnimation(context, "Request selling fail!",
+                serverMessage: state.failure.message);
+          }
+
+          if (state is CreateSellingLoaded) {
+            DialogHelper.hideLoading(context);
+            DialogHelper.successAnimation(
+                context, "Reguest selling successfully!");
+          }
+        },
+        child: Row(children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () => _sellingBloc
+                  .add(CreateSellingEvent(productId: widget.productId ?? "")),
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColors.primarycolor,
+                ),
+                child: const Text("Request",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
             ),
-            child: const Text("Request",
-                style: TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
           ),
-        ),
-        const SizedBox(width: 20),
-        Expanded(
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: AppColors.primarycolor),
+          const SizedBox(width: 20),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: AppColors.primarycolor),
+              ),
+              child: const Text("Order",
+                  style: TextStyle(
+                      color: AppColors.primarycolor,
+                      fontWeight: FontWeight.bold)),
             ),
-            child: const Text("Order",
-                style: TextStyle(
-                    color: AppColors.primarycolor,
-                    fontWeight: FontWeight.bold)),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }

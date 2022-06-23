@@ -1,4 +1,6 @@
+import 'package:flutter_application_1/src/resource/response/campaign_response.dart';
 import 'package:flutter_application_1/src/resource/response/customer_response.dart';
+import 'package:flutter_application_1/src/resource/response/get_sellings_response.dart';
 import 'package:flutter_application_1/src/resource/response/login_response.dart';
 import 'package:flutter_application_1/src/resource/response/product_response.dart';
 import 'package:retrofit/retrofit.dart';
@@ -54,4 +56,19 @@ abstract class DataService {
     @Header("Authorization") String? token,
     @Path("id") String id,
   );
+
+  @POST("request_selling/create")
+  Future<String> sellingCreate(
+      @Header("Authorization") String? token, @Body() dynamic body);
+
+  @GET("request_selling/update/{accountId}")
+  Future<SellingResponse> getSellings(
+      @Header("Authorization") String? token,
+      @Path("accountId") String accountId,
+      @Query("page_number") int page,
+      @Query("page_size") int pageSize);
+
+  @GET("campaign/list")
+  Future<CapmpaignsResponse> getCampaigns(
+      @Header("Authorization") String? token);
 }
