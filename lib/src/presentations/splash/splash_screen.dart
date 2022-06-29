@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/configs/configs.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
+import 'package:flutter_application_1/src/presentations/main/main_screen.dart';
 import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
 import 'package:flutter_application_1/src/resource/response/login_response.dart';
 
@@ -18,7 +19,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final LocalRepository _localRepository = getIt<LocalRepository>();
-  
 
   @override
   void initState() {
@@ -32,7 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 3),
       () {
         if (loginInfo != null) {
-          Navigator.pushReplacementNamed(context, AppRouters.mainScreen);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (_) => MainScreen(pageIndex: 0)));
         } else {
           Navigator.pushReplacementNamed(context, AppRouters.signIn);
         }

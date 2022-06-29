@@ -81,12 +81,14 @@ class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
         if (state is LoginServerSuccess) {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
-          Navigator.of(context).pushReplacementNamed(AppRouters.mainScreen);
+          Navigator.of(context).pushReplacementNamed(AppRouters.mainScreen,
+              arguments: {"pageIndex": 0});
         }
 
         if (state is LoginServerFailure) {
           Navigator.of(context).pop();
-          showErrorToast(context, "Login is failed, please try again!");
+          DialogHelper.errorAnimation(
+              context, "Login is failed, please try again!");
         }
 
         if (state is VerifyOtpLoading) {
@@ -95,7 +97,9 @@ class _OtpConfirmScreenState extends State<OtpConfirmScreen> {
 
         if (state is VerifyOtpFailure) {
           Navigator.of(context).pop();
-          showErrorToast(context, state.error);
+          // showErrorToast(context, state.error);
+          DialogHelper.errorAnimation(
+              context, "Opps...,\nplease check your otp or try again!");
         }
       },
       child: BlocBuilder<LoginPhoneBloc, LoginPhoneState>(

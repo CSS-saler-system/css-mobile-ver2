@@ -48,7 +48,7 @@ abstract class DataService {
     @Query("price") String? price,
     @Query("inStock") String? inStock,
     @Query("brand") String? brand,
-    @Query("productName") String? productName,
+  @Query("productName") String? productName,
   );
 
   @GET("product/get/{id}")

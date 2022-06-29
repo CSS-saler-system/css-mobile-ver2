@@ -36,7 +36,6 @@ class ProductRepositoryImpl implements ProductRepository {
       GetListProductRequest request) async {
     try {
       final String token = await _localRepository.getToken();
-      log("TOKEN. $token");
       ListProductResponse result = await _dataService.getProducts(
         // token,
         request.page,
@@ -48,7 +47,6 @@ class ProductRepositoryImpl implements ProductRepository {
         request.brand,
         request.productName,
       );
-
       return Right(result);
     } on DioError catch (e) {
       log(e.message);
@@ -119,9 +117,8 @@ class ProductRepositoryImpl implements ProductRepository {
           await _dataService.getCampaigns(token);
       return Right(sellingResponse);
     } on DioError catch (e) {
-      String message = jsonDecode(e.response?.data)?['message'] ?? "";
-      log("getcampagins: " + message);
-      return Left(Failure(e.response?.statusCode ?? 500, message));
+      log("getcampagins: " + e.message);
+      return Left(Failure(e.response?.statusCode ?? 500, ""));
     }
   }
 }

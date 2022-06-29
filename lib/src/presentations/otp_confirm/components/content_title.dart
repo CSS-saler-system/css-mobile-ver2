@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_lotties.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../configs/configs.dart';
 
@@ -16,7 +18,7 @@ class ContentTitle extends StatelessWidget {
   }
 
   Widget _buildImage() {
-    return Image.asset(AppImages.bgOtpConfirm);
+    return Lottie.asset(AppLotties.confitmOtp);
   }
 
   Widget _buildTextTitle() {

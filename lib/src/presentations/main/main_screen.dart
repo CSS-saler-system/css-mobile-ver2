@@ -11,8 +11,8 @@ import 'package:flutter_application_1/src/presentations/main/pages/request/reque
 import 'components/bottom_navigation.dart';
 
 class MainScreen extends StatefulWidget {
-  final int? pageIndex;
-  const MainScreen({Key? key, this.pageIndex}) : super(key: key);
+  final int pageIndex;
+  const MainScreen({Key? key, this.pageIndex = 0}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -45,16 +45,13 @@ class _MainScreenState extends State<MainScreen> {
     ),
   ];
 
-  final PageController _pageController = PageController(initialPage: 0);
+  late PageController _pageController;
 
   @override
-  void setState(VoidCallback fn) {
-    super.setState(fn);
-    // log("setState" + _pageIndex.toString());
-    // if (widget.pageIndex != null) {
-    //   _pageIndex = widget.pageIndex!;
-    //   onChangePage(_pageIndex);
-    // }
+  void initState() {
+    super.initState();
+    setState(() => _pageIndex = widget.pageIndex);
+    _pageController = PageController(initialPage: widget.pageIndex);
   }
 
   @override
@@ -109,6 +106,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void onChangePage(int page) {
+    // setState(() => _pageIndex = page);
     _pageController.animateToPage(page,
         duration: const Duration(milliseconds: 1), curve: Curves.easeInOut);
   }

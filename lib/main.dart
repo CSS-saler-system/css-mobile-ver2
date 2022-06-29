@@ -44,15 +44,6 @@ Future<void> main() async {
 
   await configureDependencies();
 
-  Dio dio = Dio();
-  dio.interceptors.add(PrettyDioLogger(
-    requestHeader: true,
-    requestBody: true,
-    responseBody: true,
-    responseHeader: false,
-    compact: false,
-  ));
-
   runApp(const MyApp());
 }
 

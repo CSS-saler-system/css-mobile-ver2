@@ -84,6 +84,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                   "Create Order is successfull!",
                   lotieFile: AppLotties.orderSuccess,
                   routerName: AppRouters.mainScreen,
+                  args: {"pageIndex": 2},
                 );
               }
 
@@ -145,9 +146,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                             if (_formKey.currentState!.validate()) {
                               if (_customerId.isEmpty) {
                                 DialogHelper.errorAnimation(
-                                  context,
-                                  "Please select customer!",
-                                );
+                                    context, "Please select customer!");
                               } else {
                                 _orderBloc.add(
                                   CreateOrderEvent(

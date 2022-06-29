@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/configs/configs.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
+import 'package:flutter_application_1/src/configs/constants/app_lotties.dart';
+import 'package:lottie/lottie.dart';
 
 class ContentTitle extends StatelessWidget {
   const ContentTitle({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class ContentTitle extends StatelessWidget {
   }
 
   Widget _buildImage() {
-    return Image.asset(AppImages.bgSignIn);
+    return Lottie.asset(AppLotties.getOtp);
   }
 
   Widget _buildTextDescription() {

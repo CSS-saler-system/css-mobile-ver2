@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/dialog_widget.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
+import 'package:flutter_application_1/src/configs/constants/app_lotties.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
+import 'package:flutter_application_1/src/presentations/main/main_screen.dart';
 import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
 
 import '../../../../../configs/configs.dart';
@@ -47,9 +50,12 @@ class _ListInformationWidgetState extends State<ListInformationWidget> {
           ),
         ),
         const Divider(),
-        const ListTile(
-          leading: Icon(Icons.local_grocery_store_outlined),
-          title: Text(
+        ListTile(
+          // onTap: () => Navigator.pushNamed(context, AppRouters.mainScreen, arguments: {"pageIndex": 2}),
+          onTap: () => Navigator.push(context,
+              MaterialPageRoute(builder: (_) => MainScreen(pageIndex: 2))),
+          leading: const Icon(Icons.local_grocery_store_outlined),
+          title: const Text(
             "My orders",
             style: TextStyle(
               color: AppColors.textcolor,
@@ -74,9 +80,13 @@ class _ListInformationWidgetState extends State<ListInformationWidget> {
           ),
           child: ListTile(
             onTap: () {
-              _localRepository.deleteLoginInfo();
-              Navigator.pushNamedAndRemoveUntil(
-                  context, AppRouters.signIn, (route) => false);
+              DialogHelper.dialogConfirm(context,
+                  lotieFile: AppLotties.confirmed,
+                  message: "Do you want to log out?", onpressed: () {
+                _localRepository.deleteLoginInfo();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppRouters.signIn, (route) => false);
+              });
             },
             leading: const Icon(
               Icons.exit_to_app,

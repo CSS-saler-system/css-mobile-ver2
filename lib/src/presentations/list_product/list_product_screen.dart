@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/components/button_error.dart';
+import 'package:flutter_application_1/src/components/data_notfound.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
+import 'package:flutter_application_1/src/configs/constants/app_lotties.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_products/get_products_bloc.dart';
 import 'package:flutter_application_1/src/resource/request/get_list_product_request.dart';
 import 'package:flutter_application_1/src/resource/response/product_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import '../../resource/extension/number.dart';
 import '../../configs/configs.dart';
 
@@ -34,6 +37,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
+        FocusScope.of(context).unfocus();
         setState(() {
           _loadMore = _page < _totalPage ? true : false;
         });
@@ -48,17 +52,17 @@ class _ListProductScreenState extends State<ListProductScreen> {
     });
 
     searchController.addListener(() {
-      if (searchController.text.isNotEmpty) {
+      Future.delayed(const Duration(seconds: 2), () {
         _getProductsBloc.add(
           GetProductsEventGet(
             request: GetListProductRequest(
               page: 1,
               pageSize: _pageSize,
-              productName: searchController.text,
+              productName: searchController.text.trim(),
             ),
           ),
         );
-      }
+      });
     });
   }
 
@@ -103,6 +107,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                 child: BlocListener<GetProductsBloc, GetProductsState>(
                   listener: (context, state) {
                     if (state is GetProductsLoaded) {
+                      productSell.clear();
                       productSell.addAll(state.response.data ?? []);
                       _totalPage = state.response.totalPage ?? 0;
                     }
@@ -125,17 +130,23 @@ class _ListProductScreenState extends State<ListProductScreen> {
                                 width: 15,
                                 child: CircularProgressIndicator()));
                       } else if (state is GetProductsLoaded) {
-                        return GridView.builder(
-                            itemCount: productSell.length,
-                            // controller: _scrollController,
-                            // physics: const ScrollPhysics(),
-                            shrinkWrap: true,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                            ),
-                            itemBuilder: (BuildContext context, int index) =>
-                                itemCard(productSell[index]));
+                        return productSell.isEmpty
+                            ? const DataNotFound()
+                            : GestureDetector(
+                                onTap: () => FocusScope.of(context).unfocus(),
+                                child: GridView.builder(
+                                    itemCount: productSell.length,
+                                    // controller: _scrollController,
+                                    // physics: const ScrollPhysics(),
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                    ),
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            itemCard(productSell[index])),
+                              );
                       }
                       return Center(
                         child: ButtonError(onPressed: () {}),

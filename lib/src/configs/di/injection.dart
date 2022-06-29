@@ -29,14 +29,23 @@ import 'package:flutter_application_1/src/resource/usecase/update_customer_useca
 import 'package:flutter_application_1/src/resource/usecase/verify_otp_login.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> configureDependencies() async {
+  Dio dio = Dio();
+  dio.options.contentType = "application/json";
+  dio.interceptors.add(PrettyDioLogger(
+    requestHeader: true,
+    requestBody: true,
+    responseBody: true,
+    responseHeader: false,
+    compact: false,
+  ));
   getIt.registerLazySingleton(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton(
-      () => DataService(Dio(BaseOptions(contentType: "application/json"))));
+  getIt.registerLazySingleton(() => DataService(dio));
   // getIt.registerSingletonAsync<SharedPreferences>(
   //     () => SharedPreferences.getInstance());
 
