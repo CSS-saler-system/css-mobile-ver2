@@ -44,7 +44,6 @@ class _RequestPageState extends State<RequestPage> {
                 if (state is GetSellingsLoaded) {
                   setState(() {
                     sellings = state.sellingResponse.data ?? [];
-                    log(sellings[0].id ?? "");
                     _page = state.sellingResponse.number ?? 1;
                     _totalPage = state.sellingResponse.totalPage ?? 0;
                   });
@@ -66,117 +65,135 @@ class _RequestPageState extends State<RequestPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                      height: 110,
+                                      height: 120,
                                       child: Image.asset(AppImages.iphone12)),
                                   const SizedBox(height: 5),
                                   Expanded(
                                     child: SizedBox(
-                                      height: 110,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Container(
-                                                height: 8,
-                                                width: 8,
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.primarycolor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 5),
-                                              Text(
-                                                selling.requestStatus ??
-                                                    "UNKNOW",
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppColors.primarycolor,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Divider(color: Colors.grey.shade200),
-                                          Row(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Name: ${selling.product != null ? selling.product?.name : "UNKNOW"}",
-                                                    maxLines: 1,
-                                                    style: const TextStyle(
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black87,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 2),
-                                                  Text(
-                                                    "Price: ${selling.product?.price!.getVnCurrence ?? ""}",
-                                                    maxLines: 1,
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: AppColors
-                                                          .primarycolor,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 2),
-                                                  Text(
-                                                    "Sell: ${selling.product?.pointSale ?? ""}",
-                                                    maxLines: 1,
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: AppColors
-                                                          .primarycolor,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 5),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 5,
-                                                  horizontal: 15,
-                                                ),
-                                                decoration: BoxDecoration(
+                                      height: 120,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  height: 8,
+                                                  width: 8,
+                                                  decoration: BoxDecoration(
                                                     color:
                                                         AppColors.primarycolor,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            5)),
-                                                child: const Text(
-                                                  "Cancle",
-                                                  style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
+                                                            50),
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          )
-                                        ],
+                                                const SizedBox(width: 3),
+                                                Text(
+                                                  selling.requestStatus ??
+                                                      "UNKNOW",
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color:
+                                                        AppColors.primarycolor,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            Divider(
+                                                color: Colors.grey.shade200),
+                                            Row(
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Name: ${selling.product != null ? selling.product?.name : "UNKNOW"}",
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black87,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Text(
+                                                      "Request date: ${selling.product != null ? selling.dateTimeRequest : ""}",
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        fontSize: 12,
+                                                        color: Colors.black87,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Text(
+                                                      "Price: ${selling.product?.price!.getVnCurrence ?? ""}",
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: AppColors
+                                                            .primarycolor,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Text(
+                                                      "Sell: ${selling.product?.pointSale ?? ""}",
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: AppColors
+                                                            .primarycolor,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 5),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    vertical: 5,
+                                                    horizontal: 15,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors
+                                                          .primarycolor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: const Text(
+                                                    "Cancle",
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -40,7 +40,7 @@ abstract class DataService {
 
   @GET("product/list")
   Future<ListProductResponse> getProducts(
-    @Header("Authorization") String? token,
+    // @Header("Authorization") String? token,
     @Query("page_number") int? page,
     @Query("page_size") int? pageSize,
     @Query("status") String? status,
@@ -61,14 +61,19 @@ abstract class DataService {
   Future<String> sellingCreate(
       @Header("Authorization") String? token, @Body() dynamic body);
 
-  @GET("request_selling/update/{accountId}")
+  @GET("request_selling/get/{accountId}")
   Future<SellingResponse> getSellings(
       @Header("Authorization") String? token,
       @Path("accountId") String accountId,
-      @Query("page_number") int page,
-      @Query("page_size") int pageSize);
+      @Query("pageNumber") int page,
+      @Query("pageSize") int pageSize);
 
   @GET("campaign/list")
   Future<CapmpaignsResponse> getCampaigns(
       @Header("Authorization") String? token);
+
+  //
+  @POST("order/new")
+  Future<String> newOrder(
+      @Header("Authorization") String? token, @Body() dynamic request);
 }

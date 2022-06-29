@@ -4,15 +4,18 @@ import 'package:flutter_application_1/src/resource/bloc/create_customer_bloc/cre
 import 'package:flutter_application_1/src/resource/bloc/customer_bloc/customer_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_otp_login/login_phone_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_products/get_products_bloc.dart';
+import 'package:flutter_application_1/src/resource/bloc/order_bloc/order_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/selling_bloc/selling_bloc_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/update_customer_bloc/update_customer_bloc_bloc.dart';
 import 'package:flutter_application_1/src/resource/repository/auth_reponsitory.dart';
 import 'package:flutter_application_1/src/resource/repository/customer_reponsitory.dart';
 import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
+import 'package:flutter_application_1/src/resource/repository/order_repository.dart';
 import 'package:flutter_application_1/src/resource/repository/product_repository.dart';
 import 'package:flutter_application_1/src/resource/services/data_service.dart';
 import 'package:flutter_application_1/src/resource/services/firebase_auth.dart';
 import 'package:flutter_application_1/src/resource/usecase/create_customer_usecase.dart';
+import 'package:flutter_application_1/src/resource/usecase/create_order_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/create_selling_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_campaigns_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_customer_detail_usecase.dart';
@@ -52,6 +55,7 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => CreateSellingUseCase(getIt()));
   getIt.registerLazySingleton(() => GetSellingsUseCase(getIt()));
   getIt.registerLazySingleton(() => GetCampaignsUseCase(getIt()));
+  getIt.registerLazySingleton(() => CreateOrderUsecase(getIt()));
 
   // FIREBASE_SERVICE
   getIt.registerLazySingleton<FirebaseAuthService>(
@@ -65,6 +69,7 @@ Future<void> configureDependencies() async {
   getIt.registerFactory(() => UpdateCustomerBlocBloc(getIt()));
   getIt.registerFactory(() => SellingBlocBloc(getIt(), getIt()));
   getIt.registerFactory(() => CampaignBloc(getIt()));
+  getIt.registerFactory(() => OrderBloc(getIt()));
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
@@ -75,6 +80,8 @@ Future<void> configureDependencies() async {
       () => CustomerRepositoryImpl(getIt(), getIt()));
   getIt.registerLazySingleton<ProductRepository>(
       () => ProductRepositoryImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<OrderRepository>(
+      () => OrderRepositoryImpl(getIt(), getIt()));
 }
 
 Future<void> _initSharedPref() async {

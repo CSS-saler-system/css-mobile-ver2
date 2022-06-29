@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/configs/constants/app_lotties.dart';
 import 'package:lottie/lottie.dart';
 
 class DialogHelper {
-  static void onLoading(BuildContext context) {
+  static void onLoading(BuildContext context,
+      {String? lottie, String? message}) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -28,9 +28,9 @@ class DialogHelper {
                   reverse: true,
                 ),
                 const SizedBox(height: 30),
-                const Text(
-                  "Loading...",
-                  style: TextStyle(color: Colors.black),
+                Text(
+                  message ?? "Loading...",
+                  style: const TextStyle(color: Colors.black),
                 ),
               ],
             ),
@@ -87,7 +87,7 @@ class DialogHelper {
   }
 
   static void errorAnimation(BuildContext context, String message,
-      {String? serverMessage}) {
+      {String? serverMessage, String? routerName, dynamic args}) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -127,6 +127,10 @@ class DialogHelper {
                   child: const Text("OK"),
                   onPressed: () {
                     Navigator.pop(context);
+                    if (routerName != null && routerName.isNotEmpty) {
+                      Navigator.pushReplacementNamed(context, routerName,
+                          arguments: args);
+                    }
                   },
                 ),
               ],
@@ -138,7 +142,7 @@ class DialogHelper {
   }
 
   static void successAnimation(BuildContext context, String message,
-      {String? routerName}) {
+      {String? routerName, String? lotieFile}) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -156,7 +160,7 @@ class DialogHelper {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Lottie.asset(
-                  AppLotties.success,
+                  lotieFile ?? AppLotties.success,
                   width: MediaQuery.of(context).size.width * 0.5,
                   repeat: true,
                   reverse: true,

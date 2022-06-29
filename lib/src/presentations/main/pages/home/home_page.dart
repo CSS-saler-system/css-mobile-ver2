@@ -66,8 +66,8 @@ class _HomePageState extends State<HomePage> {
           controller: _scrollController,
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             const Campings(),
-            const SizedBox(height: 20),
-            const PopularProducts(),
+            // const SizedBox(height: 20),
+            // const PopularProducts(),
             const SizedBox(height: 20),
             _buildSellProducts(),
             const SizedBox(height: 10),

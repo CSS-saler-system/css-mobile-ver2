@@ -22,7 +22,6 @@ class _CustomerScreenState extends State<CustomerScreen> {
   @override
   void initState() {
     super.initState();
-
     _customerBloc.add(const GetListCustomer());
   }
 

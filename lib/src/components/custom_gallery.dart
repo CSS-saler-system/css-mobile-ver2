@@ -24,12 +24,15 @@ class _CustomGalleryState extends State<CustomGallery> {
       children: [
         Container(
           height: widget.height,
-          child: Image.asset(
-            widget.images.isNotEmpty
-                ? widget.images[_currentIndex]
-                : AppImages.imageBase,
-            fit: BoxFit.cover,
-          ),
+          child: widget.images.isNotEmpty
+              ? Image.network(
+                  widget.images[_currentIndex],
+                  fit: BoxFit.cover,
+                )
+              : Image.asset(
+                  AppImages.imageBase,
+                  fit: BoxFit.cover,
+                ),
         ),
         Positioned(
           bottom: 10,
@@ -68,7 +71,7 @@ class _CustomGalleryState extends State<CustomGallery> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
+                  child: Image.network(
                     widget.images[index],
                     fit: BoxFit.cover,
                   ),

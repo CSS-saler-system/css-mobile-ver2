@@ -99,51 +99,48 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   contentPadding: EdgeInsets.symmetric(vertical: 20),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 20),
-                child: Expanded(
-                  child: BlocListener<GetProductsBloc, GetProductsState>(
-                    listener: (context, state) {
-                      if (state is GetProductsLoaded) {
-                        productSell.addAll(state.response.data ?? []);
-                        _totalPage = state.response.totalPage ?? 0;
-                      }
+              Expanded(
+                child: BlocListener<GetProductsBloc, GetProductsState>(
+                  listener: (context, state) {
+                    if (state is GetProductsLoaded) {
+                      productSell.addAll(state.response.data ?? []);
+                      _totalPage = state.response.totalPage ?? 0;
+                    }
 
-                      if (state is GetProductsLoadMoreLoaded) {
-                        productSell.clear();
-                        productSell.addAll(state.products);
+                    if (state is GetProductsLoadMoreLoaded) {
+                      productSell.clear();
+                      productSell.addAll(state.products);
 
-                        setState(() {
-                          _loadMore = false;
-                        });
+                      setState(() {
+                        _loadMore = false;
+                      });
+                    }
+                  },
+                  child: BlocBuilder<GetProductsBloc, GetProductsState>(
+                    builder: (context, state) {
+                      if (state is GetProductsLoading) {
+                        return const Center(
+                            child: SizedBox(
+                                height: 15,
+                                width: 15,
+                                child: CircularProgressIndicator()));
+                      } else if (state is GetProductsLoaded) {
+                        return GridView.builder(
+                            itemCount: productSell.length,
+                            // controller: _scrollController,
+                            // physics: const ScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                            ),
+                            itemBuilder: (BuildContext context, int index) =>
+                                itemCard(productSell[index]));
                       }
+                      return Center(
+                        child: ButtonError(onPressed: () {}),
+                      );
                     },
-                    child: BlocBuilder<GetProductsBloc, GetProductsState>(
-                      builder: (context, state) {
-                        if (state is GetProductsLoading) {
-                          return const Center(
-                              child: SizedBox(
-                                  height: 15,
-                                  width: 15,
-                                  child: CircularProgressIndicator()));
-                        } else if (state is GetProductsLoaded) {
-                          return GridView.builder(
-                              itemCount: productSell.length,
-                              controller: _scrollController,
-                              physics: const ScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                              ),
-                              itemBuilder: (BuildContext context, int index) =>
-                                  itemCard(productSell[index]));
-                        }
-                        return Center(
-                          child: ButtonError(onPressed: () {}),
-                        );
-                      },
-                    ),
                   ),
                 ),
               )

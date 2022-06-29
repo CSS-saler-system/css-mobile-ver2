@@ -19,9 +19,9 @@ class _SellTodayProductsState extends State<SellTodayProducts> {
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
       ListActionHeader(
-        title: "Sell Today",
-        onPressed: () {},
-      ),
+          title: "Sell Today",
+          onPressed: () =>
+              Navigator.of(context).pushNamed(AppRouters.listProduct)),
       const SizedBox(height: 20),
       // build grid view products
       Flexible(

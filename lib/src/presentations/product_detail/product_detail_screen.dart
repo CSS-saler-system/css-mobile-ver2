@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -26,12 +27,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final GetProductsBloc _getProductsBloc = getIt<GetProductsBloc>();
   final SellingBlocBloc _sellingBloc = getIt<SellingBlocBloc>();
 
-  List<String> images = [
-    AppImages.iphone12,
-    AppImages.imageBase,
-    AppImages.iphone12,
-    AppImages.bgSignIn,
-  ];
+  List<String> _images = [];
 
   @override
   void initState() {
@@ -46,47 +42,63 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _getProductsBloc,
-      child: BlocBuilder<GetProductsBloc, GetProductsState>(
-        builder: (context, state) {
+      child: BlocListener<GetProductsBloc, GetProductsState>(
+        listener: (context, state) {
           if (state is GetProductDetailLoaded) {
-            return Scaffold(
-              body: Stack(children: [
-                CustomGallery(
-                    height: MediaQuery.of(context).size.height * .5,
-                    images: images),
-                _buildBackButton(),
-                DraggableScrollableSheet(
-                    initialChildSize: 0.5,
-                    minChildSize: 0.5,
-                    maxChildSize: .9,
-                    builder: (context, controller) {
-                      return Container(
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 10,
-                                spreadRadius: 0,
-                              ),
-                            ]),
-                        child: SingleChildScrollView(
-                          padding: const EdgeInsets.only(top: 20),
-                          controller: controller,
-                          child: _buildDetailProduct(state.product),
-                        ),
-                      );
-                    })
-              ]),
-            );
+            log(jsonEncode(state.product));
+            state.product.image?.forEach((e) => {
+                  if (e.path != null)
+                    {
+                      setState(() {
+                        _images.add(e.path!);
+                      })
+                    }
+                });
           }
-
-          return const FullPageLoading();
         },
+        child: BlocBuilder<GetProductsBloc, GetProductsState>(
+          builder: (context, state) {
+            if (state is GetProductDetailLoaded) {
+              return Scaffold(
+                body: Stack(children: [
+                  CustomGallery(
+                    height: MediaQuery.of(context).size.height * .5,
+                    images: _images,
+                  ),
+                  _buildBackButton(),
+                  DraggableScrollableSheet(
+                      initialChildSize: 0.5,
+                      minChildSize: 0.5,
+                      maxChildSize: .9,
+                      builder: (context, controller) {
+                        return Container(
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 10,
+                                  spreadRadius: 0,
+                                ),
+                              ]),
+                          child: SingleChildScrollView(
+                            padding: const EdgeInsets.only(top: 20),
+                            controller: controller,
+                            child: _buildDetailProduct(state.product),
+                          ),
+                        );
+                      })
+                ]),
+              );
+            }
+
+            return const FullPageLoading();
+          },
+        ),
       ),
     );
   }
@@ -211,7 +223,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       create: (context) => _sellingBloc,
       child: BlocListener<SellingBlocBloc, SellingBlocState>(
         listener: (context, state) {
-          log("create_selling_state $state");
           if (state is CreateSellingLoading) {
             DialogHelper.onLoading(context);
           }
@@ -248,17 +259,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
           const SizedBox(width: 20),
           Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: AppColors.primarycolor),
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(
+                  context, AppRouters.createOrderScreen,
+                  arguments: {"productId": widget.productId}),
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: AppColors.primarycolor),
+                ),
+                child: const Text("Order",
+                    style: TextStyle(
+                        color: AppColors.primarycolor,
+                        fontWeight: FontWeight.bold)),
               ),
-              child: const Text("Order",
-                  style: TextStyle(
-                      color: AppColors.primarycolor,
-                      fontWeight: FontWeight.bold)),
             ),
           ),
         ]),

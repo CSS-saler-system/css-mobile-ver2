@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/presentations/create_order/create_order_screen.dart';
 import 'package:flutter_application_1/src/presentations/edit_customer/edit_customer_screen.dart';
 import 'package:flutter_application_1/src/presentations/main/main_screen.dart';
 import 'package:flutter_application_1/src/presentations/sign_in/sign_in_screen.dart';
@@ -22,6 +23,7 @@ class AppRouters {
   static const String orderDetail = "/order_detail";
   static const String listProduct = "/list_product";
   static const String editCustomerScreen = "/edit_customer_screen";
+  static const String createOrderScreen = "/create_order_screen";
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Map arguments =
         settings.arguments != null ? (settings.arguments as Map) : {};
@@ -45,10 +47,14 @@ class AppRouters {
             builder: (_) => OrderDetailScreen(orderId: arguments["orderId"]));
       case productDetail:
         return MaterialPageRoute(
-            builder: (_) =>
-                ProductDetailScreen(productId: arguments["productId"].toString()));
+            builder: (_) => ProductDetailScreen(
+                productId: arguments["productId"].toString()));
       case listProduct:
         return MaterialPageRoute(builder: (_) => const ListProductScreen());
+      case createOrderScreen:
+        return MaterialPageRoute(
+            builder: (_) =>
+                CreateOrderScreen(productId: arguments['productId']));
       case editCustomerScreen:
         return MaterialPageRoute(
             builder: (_) =>

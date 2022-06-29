@@ -36,8 +36,9 @@ class ProductRepositoryImpl implements ProductRepository {
       GetListProductRequest request) async {
     try {
       final String token = await _localRepository.getToken();
+      log("TOKEN. $token");
       ListProductResponse result = await _dataService.getProducts(
-        token,
+        // token,
         request.page,
         request.pageSize,
         request.status,
@@ -49,7 +50,8 @@ class ProductRepositoryImpl implements ProductRepository {
       );
 
       return Right(result);
-    } catch (e) {
+    } on DioError catch (e) {
+      log(e.message);
       return Left(ErrorHandler.handle(e).failure);
     }
   }
@@ -59,6 +61,9 @@ class ProductRepositoryImpl implements ProductRepository {
       String productId) async {
     try {
       final String token = await _localRepository.getToken();
+      final accounId = await _localRepository.getUserId();
+      log("account Id" + accounId);
+      log('TOKEN:' + token);
       ProductData result = await _dataService.getProductDetail(
         token,
         productId,
@@ -102,8 +107,7 @@ class ProductRepositoryImpl implements ProductRepository {
           await _dataService.getSellings(token, accounId, page, pageSize);
       return Right(sellingResponse);
     } on DioError catch (e) {
-      String message = jsonDecode(e.response?.data)['message'] ?? "";
-      return Left(Failure(e.response?.statusCode ?? 500, message));
+      return Left(Failure(e.response?.statusCode ?? 500, e.message));
     }
   }
 
@@ -115,7 +119,7 @@ class ProductRepositoryImpl implements ProductRepository {
           await _dataService.getCampaigns(token);
       return Right(sellingResponse);
     } on DioError catch (e) {
-      String message = jsonDecode(e.response?.data)['message'] ?? "";
+      String message = jsonDecode(e.response?.data)?['message'] ?? "";
       log("getcampagins: " + message);
       return Left(Failure(e.response?.statusCode ?? 500, message));
     }
