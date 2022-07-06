@@ -26,3 +26,5 @@ class CreateOrderEvent extends OrderEvent {
   List<Object> get props =>
       [productId, customerId, address, phoneNumber, quantity];
 }
+
+class GetOrdersEvent extends OrderEvent {}

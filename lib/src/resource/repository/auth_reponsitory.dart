@@ -12,8 +12,9 @@ abstract class AuthRepository {
 class AuthRepositoryImpl implements AuthRepository {
   final DataService _dataService;
   final LocalRepository _localRepository;
+  final String a;
 
-  AuthRepositoryImpl(this._dataService, this._localRepository);
+  AuthRepositoryImpl(this._dataService, this._localRepository, this.a);
 
   @override
   Future<bool> login(String firebaseToken, String registrationToken) async {

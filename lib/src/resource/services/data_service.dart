@@ -6,6 +6,8 @@ import 'package:flutter_application_1/src/resource/response/product_response.dar
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
+import '../response/order_response.dart';
+
 part 'data_service.g.dart';
 
 @RestApi(
@@ -48,7 +50,7 @@ abstract class DataService {
     @Query("price") String? price,
     @Query("inStock") String? inStock,
     @Query("brand") String? brand,
-  @Query("productName") String? productName,
+    @Query("productName") String? productName,
   );
 
   @GET("product/get/{id}")
@@ -76,4 +78,16 @@ abstract class DataService {
   @POST("order/new")
   Future<String> newOrder(
       @Header("Authorization") String? token, @Body() dynamic request);
+
+  @GET("order/list/{collaboratorId}")
+  Future<GetOrders> getOrders(
+    @Header("Authorization") String? token,
+    @Path("collaboratorId") String collaboratorId,
+  );
+
+  @GET("order/get/{orderId}")
+  Future<OrderObject> getOrderDetail(
+    @Header("Authorization") String? token,
+    @Path("orderId") String orderId,
+  );
 }

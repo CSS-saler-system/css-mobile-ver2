@@ -24,6 +24,26 @@ class CreateOrderError extends OrderState {
 
   const CreateOrderError({required this.failure});
 
-    @override
+  @override
+  List<Object> get props => [failure];
+}
+
+class GetOrdersLoading extends OrderState {}
+
+class GetOrdersLoaded extends OrderState {
+  final GetOrders orders;
+
+  const GetOrdersLoaded({required this.orders});
+
+  @override
+  List<Object> get props => [orders];
+}
+
+class GetOrdersFail extends OrderState {
+  final Failure failure;
+
+  const GetOrdersFail({required this.failure});
+
+  @override
   List<Object> get props => [failure];
 }

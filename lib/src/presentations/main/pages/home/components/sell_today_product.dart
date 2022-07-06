@@ -49,7 +49,7 @@ class _SellTodayProductsState extends State<SellTodayProducts> {
                           children: [
                             SizedBox(
                               height: 100,
-                              child: widget.products[index].image!.isEmpty
+                              child: widget.products[index].image == null
                                   ? Image.asset(AppImages.iphone12)
                                   : Image.network(
                                       widget.products[index].image![0].path ??

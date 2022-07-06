@@ -1,31 +1,16 @@
 // ignore_for_file: unnecessary_null_comparison
 
-import 'dart:io';
-import 'dart:math';
-
+import 'dart:developer';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/configs/configs.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/presentations/splash/splash_screen.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:rxdart/rxdart.dart';
 
 import 'src/configs/di/injection.dart';
-
-const AndroidNotificationChannel channel = AndroidNotificationChannel(
-  'high_importance_channel', // id
-  'High Importance Notifications', // description
-  importance: Importance.high,
-);
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,14 +21,32 @@ Future<void> main() async {
   ));
   await Firebase.initializeApp();
 
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Basic Notifications',
+        channelDescription: "Notification channel for basic tests",
+        defaultColor: Colors.teal,
+        importance: NotificationImportance.High,
+        channelShowBadge: true,
+      ),
+    ],
+  );
+
+  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  });
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
     sound: true,
   );
-
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await configureDependencies();
-
   runApp(const MyApp());
 }
 
@@ -60,55 +63,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
-    var initializationSettingsAndroid =
-        new AndroidInitializationSettings('ic_launcher');
-    var initialzationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettings =
-        InitializationSettings(android: initialzationSettingsAndroid);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
+    FirebaseMessaging.instance.getToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification!;
-      AndroidNotification android = message.notification!.android!;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                color: Colors.blue,
-                icon: "@mipmap/ic_launcher",
-              ),
-            ));
-      }
+      AwesomeNotifications().createNotificationFromJsonData(message.data);
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification!;
-      AndroidNotification android = message.notification!.android!;
-      if (notification != null && android != null) {
-        showDialog(
-            // context: context,
-            builder: (_) {
-              return AlertDialog(
-                title: Text(notification.title!),
-                content: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text(notification.body!)],
-                  ),
-                ),
-              );
-            },
-            context: context);
-      }
+    AwesomeNotifications().actionStream.listen((receivedAction) {
+      processDefaultActionReceived(receivedAction);
     });
   }
+
+  void processDefaultActionReceived(ReceivedAction receivedAction) {}
 
   @override
   Widget build(BuildContext context) {
@@ -125,4 +90,16 @@ class _MyAppState extends State<MyApp> {
       home: const SplashScreen(),
     );
   }
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // AwesomeNotifications().createNotification(
+  //   content: NotificationContent(
+  //     id: 10,
+  //     channelKey: 'basic_channel',
+  //     title: message.notification!.title,
+  //     body: message.notification!.body,
+  //   ),
+  // );
+  AwesomeNotifications().createNotificationFromJsonData(message.data);
 }

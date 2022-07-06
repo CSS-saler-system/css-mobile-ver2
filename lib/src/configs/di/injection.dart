@@ -20,6 +20,7 @@ import 'package:flutter_application_1/src/resource/usecase/create_selling_usecas
 import 'package:flutter_application_1/src/resource/usecase/get_campaigns_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_customer_detail_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_list_customer_usecase.dart';
+import 'package:flutter_application_1/src/resource/usecase/get_orders_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_otp_auth_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_product_detail_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_products_usecase.dart';
@@ -65,6 +66,7 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => GetSellingsUseCase(getIt()));
   getIt.registerLazySingleton(() => GetCampaignsUseCase(getIt()));
   getIt.registerLazySingleton(() => CreateOrderUsecase(getIt()));
+  getIt.registerLazySingleton(() => GetOrdersUseCase(getIt()));
 
   // FIREBASE_SERVICE
   getIt.registerLazySingleton<FirebaseAuthService>(
@@ -78,11 +80,11 @@ Future<void> configureDependencies() async {
   getIt.registerFactory(() => UpdateCustomerBlocBloc(getIt()));
   getIt.registerFactory(() => SellingBlocBloc(getIt(), getIt()));
   getIt.registerFactory(() => CampaignBloc(getIt()));
-  getIt.registerFactory(() => OrderBloc(getIt()));
+  getIt.registerFactory(() => OrderBloc(getIt(), getIt()));
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(getIt(), getIt()));
+      () => AuthRepositoryImpl(getIt(), getIt(), getIt()));
   getIt.registerLazySingleton<LocalRepository>(
       () => LocalRepositoryImpl(getIt()));
   getIt.registerLazySingleton<CustomerRepository>(
