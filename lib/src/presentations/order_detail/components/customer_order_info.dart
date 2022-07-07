@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/resource/response/order_response.dart';
 
 class CustomerOrderInfo extends StatelessWidget {
-  const CustomerOrderInfo({Key? key}) : super(key: key);
+  final OrderObject orderData;
+  const CustomerOrderInfo({Key? key, required this.orderData})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +26,8 @@ class CustomerOrderInfo extends StatelessWidget {
             // STATUS
             const SizedBox(height: 10),
             Row(
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Status: ',
                   style: TextStyle(
                     fontSize: 12,
@@ -32,8 +35,8 @@ class CustomerOrderInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Pending',
-                  style: TextStyle(
+                  orderData.status ?? "UNKNOW",
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -43,15 +46,15 @@ class CustomerOrderInfo extends StatelessWidget {
             const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "#123456789",
+              children: [
+                const Text(
+                  "#",
                   style: TextStyle(fontSize: 12),
                 ),
                 Text(
-                  "2020/01/01",
+                  orderData.createDate ?? "",
                   textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 12),
+                  style: const TextStyle(fontSize: 12),
                 ),
               ],
             ),
@@ -59,9 +62,13 @@ class CustomerOrderInfo extends StatelessWidget {
             const SizedBox(height: 20),
             const Text("#Customer Order Information",
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-            _personalItem(title: "customer name", value: "Tran Hoang Huy"),
-            _personalItem(title: "email", value: "fxhuytran99@gmail.com"),
-            _personalItem(title: "phone", value: "0987654321"),
+            _personalItem(
+                title: "customer name",
+                value: orderData.customerName ?? "UNKONW"),
+            _personalItem(
+                title: "email", value: orderData.customer?.phone ?? ""),
+            _personalItem(
+                title: "phone", value: orderData.customer?.phone ?? ""),
           ],
         ),
       ),

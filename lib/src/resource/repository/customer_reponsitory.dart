@@ -41,7 +41,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
       final response = await _dataService.createCustomer(token, data);
       return Right(response);
     } on DioError catch (e) {
-      String message = jsonDecode(e.response?.data)['message'] ?? "";
+      String message = e.response?.data?["message"] ?? "";
       return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
@@ -53,8 +53,8 @@ class CustomerRepositoryImpl implements CustomerRepository {
       List<CustomerData> customers = await _dataService.getCustomers(token);
       return Right(customers);
     } on DioError catch (e) {
-      log("updateCustomer: " + e.message);
-      return Left(ErrorHandler.handle(e).failure);
+      String message = e.response?.data?["message"] ?? "";
+      return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
 
@@ -65,8 +65,8 @@ class CustomerRepositoryImpl implements CustomerRepository {
       CustomerData customer = await _dataService.getCustomer(token, id);
       return Right(customer);
     } on DioError catch (e) {
-      log("getCustomer: ${e.response?.data}");
-      return Left(ErrorHandler.handle(e).failure);
+      String message = e.response?.data?["message"] ?? "";
+      return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
 
@@ -92,7 +92,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
       await _dataService.updateCustomer(token, data);
       return const Right(true);
     } on DioError catch (e) {
-       String message = jsonDecode(e.response?.data)['message'] ?? "";
+      String message = e.response?.data?["message"] ?? "";
       return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }

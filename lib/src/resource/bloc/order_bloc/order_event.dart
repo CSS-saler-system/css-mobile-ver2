@@ -28,3 +28,12 @@ class CreateOrderEvent extends OrderEvent {
 }
 
 class GetOrdersEvent extends OrderEvent {}
+
+class GetOrderDetailEvent extends OrderEvent {
+  final String orderId;
+
+  const GetOrderDetailEvent({required this.orderId});
+
+  @override
+  List<Object> get props => [orderId];
+}

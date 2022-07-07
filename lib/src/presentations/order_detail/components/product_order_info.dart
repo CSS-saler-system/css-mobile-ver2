@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/resource/response/order_response.dart';
+import '../../../resource/extension/number.dart';
 
 class ProductOrderInfo extends StatelessWidget {
-  const ProductOrderInfo({Key? key}) : super(key: key);
+  final OrderObject orderData;
+  const ProductOrderInfo({Key? key, required this.orderData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +29,24 @@ class ProductOrderInfo extends StatelessWidget {
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            _itemProductInfo(),
-            _itemProductInfo(),
-            _itemProductInfo(),
+            Column(
+              children: orderData.orderDetails!
+                  .map((e) => _itemProductInfo(
+                      productName: e.nameProduct ?? "UNKNOW",
+                      quantity: e.quantity?.toInt() ?? 0,
+                      price: e.productPrice!.getVnCurrence.toString()))
+                  .toList(),
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget _itemProductInfo() {
+  Widget _itemProductInfo(
+      {required String productName,
+      required int quantity,
+      required String price}) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -43,9 +54,9 @@ class ProductOrderInfo extends StatelessWidget {
         children: [
           RichText(
               text: TextSpan(children: <InlineSpan>[
-            const TextSpan(
-                text: 'Samsung Galaxy S10',
-                style: TextStyle(
+            TextSpan(
+                text: productName,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -53,17 +64,17 @@ class ProductOrderInfo extends StatelessWidget {
             WidgetSpan(
               child: Container(
                 margin: const EdgeInsets.only(left: 5),
-                child: const Text('x2',
-                    style: TextStyle(
+                child: Text('x$quantity',
+                    style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey)),
               ),
             ),
           ])),
-          const Text(
-            '\$1,000.00',
-            style: TextStyle(
+          Text(
+            price,
+            style: const TextStyle(
                 fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ],

@@ -56,7 +56,7 @@ class OrderRepositoryImpl implements OrderRepository {
 
       return Right(orderId);
     } on DioError catch (e) {
-      String message = jsonDecode(e.response?.data)?['message'] ?? "";
+      String message = e.response?.data?["message"] ?? "";
       return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
@@ -69,7 +69,7 @@ class OrderRepositoryImpl implements OrderRepository {
       GetOrders result = await _dataService.getOrders(token, collaboratorId);
       return Right(result);
     } on DioError catch (e) {
-      String message = jsonDecode(e.response?.data)?['message'] ?? "";
+      String message = e.response?.data?["message"] ?? "";
       return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
@@ -83,7 +83,9 @@ class OrderRepositoryImpl implements OrderRepository {
           await _dataService.getOrderDetail(token, request.orderId);
       return Right(orderObj);
     } on DioError catch (e) {
-      String message = jsonDecode(e.response?.data)?['message'] ?? "";
+      // dynamic response = jsonDecode(e.response?.data);
+
+      String message = e.response?.data?["message"] ?? "";
       return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }

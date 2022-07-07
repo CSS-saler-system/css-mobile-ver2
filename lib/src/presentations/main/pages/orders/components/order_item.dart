@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/dialog_widget.dart';
 import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/resource/bloc/order_bloc/order_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,30 +18,50 @@ class OrderItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => _orderBloc,
-        child: order.orderDetails!.isNotEmpty
-            ? GestureDetector(
-                onTap: () =>
-                    Navigator.pushNamed(context, AppRouters.orderDetail),
-                child: Column(
-                  children: [
-                    Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildCardHeader(),
-                              const Divider(),
-                              _buildCardBody(),
-                              const Divider(),
-                              _buildCardFooter(),
-                            ]),
-                      ),
+        child: BlocListener<OrderBloc, OrderState>(
+          listener: (context, state) {
+            if (state is GetOrderDetailLoading) {
+              DialogHelper.onLoading(context);
+            }
+
+            if (state is GetOrderDetailLoaded) {
+              DialogHelper.hideLoading(context);
+              Navigator.pushNamed(context, AppRouters.orderDetail,
+                  arguments: {"orderData": state.orderData});
+            }
+
+            if (state is GetOrderDetailError) {
+              DialogHelper.hideLoading(context);
+              DialogHelper.errorAnimation(context, state.failure.message);
+            }
+          },
+          child: Container(
+            child: order.orderDetails!.isNotEmpty
+                ? GestureDetector(
+                    onTap: () => _orderBloc
+                        .add(GetOrderDetailEvent(orderId: order.id ?? "")),
+                    child: Column(
+                      children: [
+                        Card(
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildCardHeader(),
+                                  const Divider(),
+                                  _buildCardBody(),
+                                  const Divider(),
+                                  _buildCardFooter(),
+                                ]),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              )
-            : const SizedBox());
+                  )
+                : const SizedBox(),
+          ),
+        ));
   }
 
   Widget _buildCardHeader() {

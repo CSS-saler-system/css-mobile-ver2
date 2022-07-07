@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/presentations/order_detail/components/customer_order_info.dart';
 import 'package:flutter_application_1/src/presentations/order_detail/components/total_order_info.dart';
+import 'package:flutter_application_1/src/resource/response/order_response.dart';
 
 import 'components/product_order_info.dart';
 
 class OrderDetailScreen extends StatefulWidget {
-  final int? orderId;
-  const OrderDetailScreen({Key? key, this.orderId}) : super(key: key);
+  final OrderObject orderData;
+  const OrderDetailScreen({Key? key, required this.orderData})
+      : super(key: key);
 
   @override
   State<OrderDetailScreen> createState() => _OrderDetailScreenState();
@@ -32,10 +34,10 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              CustomerOrderInfo(),
-              ProductOrderInfo(),
-              TotalOrderInfo(),
+            children: [
+              CustomerOrderInfo(orderData: widget.orderData),
+              ProductOrderInfo(orderData: widget.orderData),
+              TotalOrderInfo(orderData: widget.orderData),
             ],
           ),
         ),

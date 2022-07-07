@@ -69,8 +69,8 @@ class ProductRepositoryImpl implements ProductRepository {
 
       return Right(result);
     } on DioError catch (e) {
-      log(e.toString());
-      return Left(ErrorHandler.handle(e).failure);
+      String message = e.response?.data?["message"] ?? "";
+      return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
 
@@ -90,8 +90,8 @@ class ProductRepositoryImpl implements ProductRepository {
 
       return Right(result);
     } on DioError catch (e) {
-      log(e.toString());
-      return Left(ErrorHandler.handle(e).failure);
+      String message = e.response?.data?["message"] ?? "";
+      return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
 
@@ -105,7 +105,8 @@ class ProductRepositoryImpl implements ProductRepository {
           await _dataService.getSellings(token, accounId, page, pageSize);
       return Right(sellingResponse);
     } on DioError catch (e) {
-      return Left(Failure(e.response?.statusCode ?? 500, e.message));
+      String message = e.response?.data?["message"] ?? "";
+      return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
 
@@ -117,8 +118,8 @@ class ProductRepositoryImpl implements ProductRepository {
           await _dataService.getCampaigns(token);
       return Right(sellingResponse);
     } on DioError catch (e) {
-      log("getcampagins: " + e.message);
-      return Left(Failure(e.response?.statusCode ?? 500, ""));
+      String message = e.response?.data?["message"] ?? "";
+      return Left(Failure(e.response?.statusCode ?? 500, message));
     }
   }
 }
