@@ -27,9 +27,9 @@ class _ListInformationWidgetState extends State<ListInformationWidget> {
         GestureDetector(
           onTap: () => Navigator.pushNamed(context, AppRouters.editProfile),
           child: const ListTile(
-            leading: Icon(Icons.account_circle_outlined),
+            leading: Icon(Icons.store),
             title: Text(
-              "Profile",
+              "Enterprise",
               style: TextStyle(
                 color: AppColors.textcolor,
               ),
@@ -52,8 +52,10 @@ class _ListInformationWidgetState extends State<ListInformationWidget> {
         const Divider(),
         ListTile(
           // onTap: () => Navigator.pushNamed(context, AppRouters.mainScreen, arguments: {"pageIndex": 2}),
-          onTap: () => Navigator.push(context,
-              MaterialPageRoute(builder: (_) => MainScreen(pageIndex: 2))),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => const MainScreen(pageIndex: 2))),
           leading: const Icon(Icons.local_grocery_store_outlined),
           title: const Text(
             "My orders",

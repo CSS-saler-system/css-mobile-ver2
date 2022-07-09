@@ -14,12 +14,14 @@ class OrderInfo extends StatefulWidget {
   final TextEditingController phoneNumberControler;
   final TextEditingController addressController;
   final GlobalKey<FormState> formKey;
+  final CustomerData? initCustomer;
   const OrderInfo({
     Key? key,
     required this.selectCustomer,
     required this.addressController,
     required this.phoneNumberControler,
     required this.formKey,
+    this.initCustomer,
   }) : super(key: key);
 
   @override
@@ -55,11 +57,11 @@ class _OrderInfoState extends State<OrderInfo> {
             margin: const EdgeInsets.only(top: 10),
             child: Column(children: [
               DropDownInput(
+                initData: widget.initCustomer,
                 label: "Customer",
                 data: _customers,
                 selectCustomer: (customerId) {
                   widget.selectCustomer(customerId);
-                  log("CustomerId: " + customerId);
                 },
               ),
               const Divider(),

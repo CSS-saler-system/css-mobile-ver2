@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/resource/response/order_response.dart';
 import '../../../resource/extension/number.dart';
 
@@ -26,7 +27,11 @@ class ProductOrderInfo extends StatelessWidget {
           children: [
             const Text(
               "#Product Information",
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textcolor,
+              ),
             ),
             const SizedBox(height: 10),
             Column(

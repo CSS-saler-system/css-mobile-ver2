@@ -5,9 +5,14 @@ class DropDownInput extends StatefulWidget {
   final String? label;
   final List<CustomerData> data;
   final Function(String) selectCustomer;
-  const DropDownInput(
-      {Key? key, this.label, required this.data, required this.selectCustomer})
-      : super(key: key);
+  final CustomerData? initData;
+  const DropDownInput({
+    Key? key,
+    this.label,
+    required this.data,
+    required this.selectCustomer,
+    this.initData,
+  }) : super(key: key);
 
   @override
   State<DropDownInput> createState() => _DropDownInputState();
@@ -15,26 +20,35 @@ class DropDownInput extends StatefulWidget {
 
 class _DropDownInputState extends State<DropDownInput> {
   String _selected = "";
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initData != null) {
+      setState(() {
+        _selected = widget.initData?.name ?? "";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.label ?? "",
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 5),
-          GestureDetector(
-              onTap: () => showModal(context),
-              child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                      _selected.isNotEmpty ? _selected : "Select customer")))
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.label ?? "",
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 5),
+        GestureDetector(
+            onTap: () => showModal(context),
+            child: SizedBox(
+                width: double.infinity,
+                child:
+                    Text(_selected.isNotEmpty ? _selected : "Select customer")))
+      ],
     );
   }
 

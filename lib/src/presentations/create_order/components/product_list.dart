@@ -36,55 +36,55 @@ class _ProductListState extends State<ProductList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          child: Row(children: [
-            // ORDER IMAGE
-            Container(
-              height: 80,
-              width: 80,
-              child: widget.product.image!.isEmpty
-                  ? Image.asset(
-                      AppImages.iphone12,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.network(
-                      widget.product.image![0].path!,
-                      fit: BoxFit.cover,
-                    ),
-            ),
+        Row(children: [
+          // ORDER IMAGE
+          SizedBox(
+            height: 80,
+            width: 80,
+            child: widget.product.image == null ||
+                    widget.product.image != null &&
+                        widget.product.image!.isEmpty
+                ? Image.asset(
+                    AppImages.iphone12,
+                    fit: BoxFit.cover,
+                  )
+                : Image.network(
+                    widget.product.image![0].path!,
+                    fit: BoxFit.cover,
+                  ),
+          ),
 
-            // ORDER SHORT DESCRIPTION
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.product.name!.toUpperCase(),
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "Price: " + widget.product.price!.getVnCurrence,
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                    const SizedBox(height: 5),
-                    QuantityInput(
-                        quantity: 1,
-                        // onChanged: widget.onChanged,
-                        onChanged: (quantity) {
-                          setState(() {
-                            _totalPrice = quantity * widget.product.price!;
-                          });
-                        }),
-                  ],
-                ),
+          // ORDER SHORT DESCRIPTION
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.product.name!.toUpperCase(),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Price: " + widget.product.price!.getVnCurrence,
+                    style: const TextStyle(fontSize: 13),
+                  ),
+                  const SizedBox(height: 5),
+                  QuantityInput(
+                      quantity: 1,
+                      // onChanged: widget.onChanged,
+                      onChanged: (quantity) {
+                        setState(() {
+                          _totalPrice = quantity * widget.product.price!;
+                        });
+                      }),
+                ],
               ),
             ),
-          ]),
-        ),
+          ),
+        ]),
         const Divider(),
         Container(
           alignment: Alignment.centerRight,

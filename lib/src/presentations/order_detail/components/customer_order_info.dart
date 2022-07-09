@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/resource/response/order_response.dart';
 
 class CustomerOrderInfo extends StatelessWidget {
@@ -32,6 +33,7 @@ class CustomerOrderInfo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
+                    color: AppColors.textcolor,
                   ),
                 ),
                 Text(
@@ -39,6 +41,7 @@ class CustomerOrderInfo extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
+                    color: AppColors.textcolor,
                   ),
                 ),
               ],
@@ -60,8 +63,14 @@ class CustomerOrderInfo extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-            const Text("#Customer Order Information",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            const Text(
+              "#Customer Order Information",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textcolor,
+              ),
+            ),
             _personalItem(
                 title: "customer name",
                 value: orderData.customerName ?? "UNKONW"),

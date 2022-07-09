@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/components/custom_button_widget.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
+import 'package:flutter_application_1/src/configs/constants/app_router.dart';
+import 'package:flutter_application_1/src/presentations/main/main_screen.dart';
 import 'package:flutter_application_1/src/presentations/order_detail/components/customer_order_info.dart';
 import 'package:flutter_application_1/src/presentations/order_detail/components/total_order_info.dart';
 import 'package:flutter_application_1/src/resource/response/order_response.dart';
@@ -38,6 +41,34 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               CustomerOrderInfo(orderData: widget.orderData),
               ProductOrderInfo(orderData: widget.orderData),
               TotalOrderInfo(orderData: widget.orderData),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        text: "Edit Order",
+                        backgroundColor: Colors.white,
+                        onPressed: () => Navigator.of(context).pushNamed(
+                            AppRouters.updateOrderScreen,
+                            arguments: {"orderData": widget.orderData}),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: CustomButton(
+                        text: "Back to home",
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    const MainScreen(pageIndex: 0))),
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),

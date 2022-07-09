@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
-import 'dart:developer';
+import 'dart:math';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,8 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/configs/configs.dart';
 import 'package:flutter_application_1/src/configs/constants/app_color.dart';
 import 'package:flutter_application_1/src/presentations/splash/splash_screen.dart';
+import 'package:uuid/uuid.dart';
 
 import 'src/configs/di/injection.dart';
+
+const uuid = Uuid();
+var rng = Random();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,15 +69,17 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     FirebaseMessaging.instance.getToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      AwesomeNotifications().createNotificationFromJsonData(message.data);
-    });
-
-    AwesomeNotifications().actionStream.listen((receivedAction) {
-      processDefaultActionReceived(receivedAction);
+      print("adakdaka");
+      AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: rng.nextInt(1000000),
+          channelKey: 'basic_channel',
+          title: message.notification!.title,
+          body: message.notification!.body,
+        ),
+      );
     });
   }
-
-  void processDefaultActionReceived(ReceivedAction receivedAction) {}
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +99,12 @@ class _MyAppState extends State<MyApp> {
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // AwesomeNotifications().createNotification(
-  //   content: NotificationContent(
-  //     id: 10,
-  //     channelKey: 'basic_channel',
-  //     title: message.notification!.title,
-  //     body: message.notification!.body,
-  //   ),
-  // );
-  AwesomeNotifications().createNotificationFromJsonData(message.data);
+  AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: rng.nextInt(1000000),
+      channelKey: 'basic_channel',
+      title: message.notification!.title,
+      body: message.notification!.body,
+    ),
+  );
 }

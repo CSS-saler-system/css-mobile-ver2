@@ -96,6 +96,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             if (state is GetProductsLoadMoreLoaded) {
+              productSell.clear();
               productSell.addAll(state.products);
 
               setState(() {

@@ -46,7 +46,6 @@ class _CampingsState extends State<Campings> {
             setState(() {
               campaigns = state.response.data ?? [];
             });
-            DEV.log("GetCampaignsLoaded: " + campaigns.length.toString());
           }
         },
         child: BlocBuilder<CampaignBloc, CampaignState>(
@@ -100,16 +99,16 @@ class _CampingsState extends State<Campings> {
                               ),
                             ),
                             Text(
-                              campaign.campaignDescription ?? "",
+                              campaign.campaignDescription == null
+                                  ? ""
+                                  : campaign.campaignDescription!,
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
                               ),
                             ),
                             const SizedBox(height: 5),
-                            Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: const Divider(color: Colors.white)),
+                            const Divider(color: Colors.white),
                             Text(
                               campaign.kpiSaleProduct.toString(),
                               style: const TextStyle(
