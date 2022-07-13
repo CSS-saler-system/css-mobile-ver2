@@ -62,14 +62,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-
   @override
   void initState() {
     super.initState();
     FirebaseMessaging.instance.getToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("adakdaka");
       AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: rng.nextInt(1000000),
