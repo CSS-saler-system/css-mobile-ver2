@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_application_1/src/resource/data/failure.dart';
 import 'package:flutter_application_1/src/resource/request/get_list_product_request.dart';
 import 'package:flutter_application_1/src/resource/response/product_response.dart';
+import 'package:flutter_application_1/src/resource/usecase/get_enteprise_products_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_product_detail_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_products_usecase.dart';
 
@@ -14,12 +15,14 @@ part 'get_products_state.dart';
 class GetProductsBloc extends Bloc<GetProductsEvent, GetProductsState> {
   final GetProductsUseCase _useCase;
   final GetProductDetailUseCase _detailUseCase;
-
-  GetProductsBloc(this._useCase, this._detailUseCase)
+  final GetEntepriseProductsUseCase _entepriseProductsUseCase;
+  GetProductsBloc(
+      this._useCase, this._detailUseCase, this._entepriseProductsUseCase)
       : super(GetProductsInitial()) {
     on<GetProductsEventGet>(_getProducts);
     on<GetProductsLoadMoreEvent>(_onLoadMore);
     on<GetProductDetailEvent>(_getProductDetail);
+    on<GetEntepriseProductsEvent>(_getEntepriseProducts);
   }
 
   FutureOr<void> _getProducts(
@@ -67,5 +70,12 @@ class GetProductsBloc extends Bloc<GetProductsEvent, GetProductsState> {
     )))
         .fold((failure) => emit(GetProductDetailError(failure: failure)),
             (response) => emit(GetProductDetailLoaded(product: response)));
+  }
+
+  FutureOr<void> _getEntepriseProducts(GetEntepriseProductsEvent event,
+      Emitter<GetProductsState> emit) async {
+    (await _entepriseProductsUseCase.execute(event.request)).fold(
+        (failure) => emit(GetProductsError(failure: failure)),
+        (response) => emit(GetProductsLoaded(response: response)));
   }
 }

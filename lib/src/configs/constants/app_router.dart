@@ -53,7 +53,11 @@ class AppRouters {
             builder: (_) => ProductDetailScreen(
                 productId: arguments["productId"].toString()));
       case listProduct:
-        return MaterialPageRoute(builder: (_) => const ListProductScreen());
+        return MaterialPageRoute(
+            builder: (_) => ListProductScreen(
+                  id: arguments['id'],
+                  title: arguments['title'],
+                ));
       case createOrderScreen:
         return MaterialPageRoute(
             builder: (_) =>

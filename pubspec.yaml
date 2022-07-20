@@ -66,9 +66,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   injectable_generator: 
-  retrofit_generator: 
-  build_runner:
-  json_serializable:
+  retrofit_generator: any
+  build_runner: 
+  json_serializable: any
 
 
 

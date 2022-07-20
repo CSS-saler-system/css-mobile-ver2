@@ -33,3 +33,12 @@ class GetProductDetailEvent extends GetProductsEvent {
   @override
   List<Object> get props => [productId];
 }
+
+class GetEntepriseProductsEvent extends GetProductsEvent {
+  final GetEntepriseProductsUseCaseInput request;
+
+  const GetEntepriseProductsEvent({required this.request});
+
+  @override
+  List<Object> get props => [request];
+}

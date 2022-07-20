@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/src/resource/response/campaign_response.dart';
 import 'package:flutter_application_1/src/resource/response/customer_response.dart';
+import 'package:flutter_application_1/src/resource/response/enteprise_response.dart';
 import 'package:flutter_application_1/src/resource/response/get_sellings_response.dart';
 import 'package:flutter_application_1/src/resource/response/login_response.dart';
 import 'package:flutter_application_1/src/resource/response/product_response.dart';
@@ -53,6 +54,20 @@ abstract class DataService {
     @Query("productName") String? productName,
   );
 
+  @GET("product/list/{id}")
+  Future<ListProductResponse> getEntepriseProducts(
+    // @Header("Authorization") String? token,
+    @Path("id") String id,
+    @Query("pageNumber") int? page,
+    @Query("pageSize") int? pageSize,
+    @Query("status") String? status,
+    @Query("pointSale") int? pointSale,
+    @Query("price") String? price,
+    @Query("inStock") String? inStock,
+    @Query("brand") String? brand,
+    @Query("productName") String? productName,
+  );
+
   @GET("product/get/{id}")
   Future<ProductData> getProductDetail(
     @Header("Authorization") String? token,
@@ -65,10 +80,11 @@ abstract class DataService {
 
   @GET("request_selling/get/{accountId}")
   Future<SellingResponse> getSellings(
-      @Header("Authorization") String? token,
-      @Path("accountId") String accountId,
-      @Query("pageNumber") int page,
-      @Query("pageSize") int pageSize);
+    @Header("Authorization") String? token,
+    @Path("accountId") String accountId,
+    @Query("pageNumber") int page,
+    @Query("pageSize") int pageSize,
+  );
 
   @GET("campaign/list")
   Future<CapmpaignsResponse> getCampaigns(
@@ -89,5 +105,11 @@ abstract class DataService {
   Future<OrderObject> getOrderDetail(
     @Header("Authorization") String? token,
     @Path("orderId") String orderId,
+  );
+
+  @GET("enterprise/list")
+  Future<ListEnteprise> getEnteprise(
+    @Query("pageNumber") int page,
+    @Query("pageSize") int pageSize,
   );
 }

@@ -6,6 +6,7 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_application_1/src/resource/data/error_handler.dart';
 import 'package:flutter_application_1/src/resource/data/failure.dart';
 import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
+import 'package:flutter_application_1/src/resource/request/get_list_product_enterprise_request.dart';
 import 'package:flutter_application_1/src/resource/request/get_list_product_request.dart';
 import 'package:flutter_application_1/src/resource/response/campaign_response.dart';
 import 'package:flutter_application_1/src/resource/response/get_sellings_response.dart';
@@ -17,6 +18,8 @@ abstract class ProductRepository {
   Future<Either<Failure, ListProductResponse>> getListProduct(
       GetListProductRequest request);
 
+  Future<Either<Failure, ListProductResponse>> getListProductEnteprise(
+      GetListProductEntepriseRequest request);
   Future<Either<Failure, ProductData>> getProductDetail(String productId);
 
   Future<Either<Failure, String>> createSelling(String productId);
@@ -120,6 +123,29 @@ class ProductRepositoryImpl implements ProductRepository {
     } on DioError catch (e) {
       String message = e.response?.data?["message"] ?? "";
       return Left(Failure(e.response?.statusCode ?? 500, message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ListProductResponse>> getListProductEnteprise(
+      GetListProductEntepriseRequest request) async {
+    try {
+      final String token = await _localRepository.getToken();
+      ListProductResponse result = await _dataService.getEntepriseProducts(
+        request.id,
+        request.page,
+        request.pageSize,
+        request.status,
+        request.pointSale,
+        request.price,
+        request.inStock,
+        request.brand,
+        request.productName,
+      );
+      return Right(result);
+    } on DioError catch (e) {
+      log(e.message);
+      return Left(ErrorHandler.handle(e).failure);
     }
   }
 }

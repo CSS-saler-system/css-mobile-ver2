@@ -137,6 +137,33 @@ class _DataService implements DataService {
   }
 
   @override
+  Future<ListProductResponse> getEntepriseProducts(id, page, pageSize, status,
+      pointSale, price, inStock, brand, productName) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pageNumber': page,
+      r'pageSize': pageSize,
+      r'status': status,
+      r'pointSale': pointSale,
+      r'price': price,
+      r'inStock': inStock,
+      r'brand': brand,
+      r'productName': productName
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ListProductResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'product/list/${id}',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ListProductResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ProductData> getProductDetail(token, id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -260,6 +287,25 @@ class _DataService implements DataService {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = OrderObject.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ListEnteprise> getEnteprise(page, pageSize) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pageNumber': page,
+      r'pageSize': pageSize
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ListEnteprise>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'enterprise/list',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ListEnteprise.fromJson(_result.data!);
     return value;
   }
 

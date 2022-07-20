@@ -7,13 +7,17 @@ import 'package:flutter_application_1/src/configs/di/injection.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_products/get_products_bloc.dart';
 import 'package:flutter_application_1/src/resource/request/get_list_product_request.dart';
 import 'package:flutter_application_1/src/resource/response/product_response.dart';
+import 'package:flutter_application_1/src/resource/usecase/get_enteprise_products_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import '../../resource/extension/number.dart';
 import '../../configs/configs.dart';
 
 class ListProductScreen extends StatefulWidget {
-  const ListProductScreen({Key? key}) : super(key: key);
+  final String title;
+  final String id;
+  const ListProductScreen({Key? key, required this.id, required this.title})
+      : super(key: key);
 
   @override
   State<ListProductScreen> createState() => _ListProductScreenState();
@@ -25,45 +29,15 @@ class _ListProductScreenState extends State<ListProductScreen> {
   final searchController = TextEditingController();
   final List<ProductData> productSell = [];
   bool _loadMore = false;
-  int _page = 1, _pageSize = 8, _totalPage = 0;
+  int _page = 1, _pageSize = 1000000, _totalPage = 0;
 
   @override
   void initState() {
     super.initState();
 
-    _getProductsBloc.add(GetProductsEventGet(
-        request: GetListProductRequest(page: 1, pageSize: _pageSize)));
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        FocusScope.of(context).unfocus();
-        setState(() {
-          _loadMore = _page < _totalPage ? true : false;
-        });
-
-        if (_loadMore) {
-          _getProductsBloc.add(GetProductsLoadMoreEvent(
-              request:
-                  GetListProductRequest(page: _page + 1, pageSize: _pageSize)));
-          _page++;
-        }
-      }
-    });
-
-    searchController.addListener(() {
-      Future.delayed(const Duration(seconds: 2), () {
-        _getProductsBloc.add(
-          GetProductsEventGet(
-            request: GetListProductRequest(
-              page: 1,
-              pageSize: _pageSize,
-              productName: searchController.text.trim(),
-            ),
-          ),
-        );
-      });
-    });
+    _getProductsBloc.add(GetEntepriseProductsEvent(
+        request: GetEntepriseProductsUseCaseInput(
+            page: 1, pageSize: _pageSize, id: widget.id)));
   }
 
   @override
@@ -80,9 +54,9 @@ class _ListProductScreenState extends State<ListProductScreen> {
         elevation: 2,
         backgroundColor: AppColors.primarycolor,
         centerTitle: true,
-        title: const Text(
-          'List Products',
-          style: TextStyle(
+        title: Text(
+          widget.title,
+          style: const TextStyle(
             color: Colors.white,
           ),
         ),
@@ -123,13 +97,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   },
                   child: BlocBuilder<GetProductsBloc, GetProductsState>(
                     builder: (context, state) {
-                      if (state is GetProductsLoading) {
-                        return const Center(
-                            child: SizedBox(
-                                height: 15,
-                                width: 15,
-                                child: CircularProgressIndicator()));
-                      } else if (state is GetProductsLoaded) {
+                      if (state is GetProductsLoaded) {
                         return productSell.isEmpty
                             ? const DataNotFound()
                             : GestureDetector(
@@ -147,10 +115,17 @@ class _ListProductScreenState extends State<ListProductScreen> {
                                         (BuildContext context, int index) =>
                                             itemCard(productSell[index])),
                               );
+                      } else if (state is GetProductDetailError) {
+                        return Center(
+                          child: ButtonError(onPressed: () {}),
+                        );
                       }
-                      return Center(
-                        child: ButtonError(onPressed: () {}),
-                      );
+
+                      return const Center(
+                          child: SizedBox(
+                              height: 15,
+                              width: 15,
+                              child: CircularProgressIndicator()));
                     },
                   ),
                 ),

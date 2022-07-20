@@ -73,12 +73,9 @@ class DialogHelper {
                 const SizedBox(height: 10),
                 Text(message),
                 const SizedBox(height: 10),
-                RaisedButton(
-                  child: Text("OK"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                MaterialButton(
+                    child: const Text("OK"),
+                    onPressed: () => Navigator.pop(context))
               ],
             ),
           ),

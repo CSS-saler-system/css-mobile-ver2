@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/src/resource/bloc/campaign_bloc/campaign_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/create_customer_bloc/create_customer_bloc_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/customer_bloc/customer_bloc.dart';
+import 'package:flutter_application_1/src/resource/bloc/enteprise_bloc/enteprise_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_otp_login/login_phone_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/get_products/get_products_bloc.dart';
 import 'package:flutter_application_1/src/resource/bloc/order_bloc/order_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_application_1/src/resource/bloc/selling_bloc/selling_blo
 import 'package:flutter_application_1/src/resource/bloc/update_customer_bloc/update_customer_bloc_bloc.dart';
 import 'package:flutter_application_1/src/resource/repository/auth_reponsitory.dart';
 import 'package:flutter_application_1/src/resource/repository/customer_reponsitory.dart';
+import 'package:flutter_application_1/src/resource/repository/enteprise_repository.dart';
 import 'package:flutter_application_1/src/resource/repository/local_reponsitory.dart';
 import 'package:flutter_application_1/src/resource/repository/order_repository.dart';
 import 'package:flutter_application_1/src/resource/repository/product_repository.dart';
@@ -19,7 +21,9 @@ import 'package:flutter_application_1/src/resource/usecase/create_order_usecase.
 import 'package:flutter_application_1/src/resource/usecase/create_selling_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_campaigns_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_customer_detail_usecase.dart';
+import 'package:flutter_application_1/src/resource/usecase/get_enteprise_products_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_list_customer_usecase.dart';
+import 'package:flutter_application_1/src/resource/usecase/get_list_enteprise_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_order_detail_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_orders_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_otp_auth_usecase.dart';
@@ -69,7 +73,8 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => CreateOrderUsecase(getIt()));
   getIt.registerLazySingleton(() => GetOrdersUseCase(getIt()));
   getIt.registerLazySingleton(() => GetOrderDetailUseCase(getIt()));
-
+  getIt.registerLazySingleton(() => GetListEntepriseUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetEntepriseProductsUseCase(getIt()));
   // FIREBASE_SERVICE
   getIt.registerLazySingleton<FirebaseAuthService>(
       () => FirebaseAuthServiceImpl(getIt()));
@@ -77,12 +82,13 @@ Future<void> configureDependencies() async {
   // BLOC
   getIt.registerFactory(() => LoginPhoneBloc(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => CreateCustomerBlocBloc(getIt()));
-  getIt.registerFactory(() => GetProductsBloc(getIt(), getIt()));
+  getIt.registerFactory(() => GetProductsBloc(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => CustomerBloc(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => UpdateCustomerBlocBloc(getIt()));
   getIt.registerFactory(() => SellingBlocBloc(getIt(), getIt()));
   getIt.registerFactory(() => CampaignBloc(getIt()));
   getIt.registerFactory(() => OrderBloc(getIt(), getIt(), getIt()));
+  getIt.registerFactory(() => EntepriseBloc(getIt()));
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
@@ -95,6 +101,8 @@ Future<void> configureDependencies() async {
       () => ProductRepositoryImpl(getIt(), getIt()));
   getIt.registerLazySingleton<OrderRepository>(
       () => OrderRepositoryImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<EntepriseRepository>(
+      () => EntepriseRepositoryImpl(getIt(), getIt()));
 }
 
 Future<void> _initSharedPref() async {

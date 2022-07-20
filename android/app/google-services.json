@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:865553956059:android:abb26baf90a6de6403a0fe",
+        "mobilesdk_app_id": "1:865553956059:android:21fad2c0489cd8e203a0fe",
         "android_client_info": {
-          "package_name": "com.app.css.bee"
+          "package_name": "com.css.bee"
         }
       },
       "oauth_client": [
         {
-          "client_id": "865553956059-ueq7bncbde22s2pbbl3vld5k9scjq9gm.apps.googleusercontent.com",
+          "client_id": "865553956059-4k160b87t64pb6k62hev7giff0k8v7fp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.css.bee",
+            "package_name": "com.css.bee",
             "certificate_hash": "21f6654652a00cbe133f6342c33f70b7499a4d22"
           }
         },
@@ -44,18 +44,18 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:865553956059:android:5d4b4cb3121d6cea03a0fe",
+        "mobilesdk_app_id": "1:865553956059:android:f9afef856bf48fef03a0fe",
         "android_client_info": {
           "package_name": "com.dev.huy.css.bee"
         }
       },
       "oauth_client": [
         {
-          "client_id": "865553956059-iibb7huurjm7li3joqep8tqu4mbr22bg.apps.googleusercontent.com",
+          "client_id": "865553956059-t3hdchfdt7ue571trblaoelv5f64nndb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.dev.huy.css.bee",
-            "certificate_hash": "c1c18e4f4eaac30e2d6f88df21d39b959943eea1"
+            "certificate_hash": "637ef3c866d4560a30396a6329035c9c96019ed4"
           }
         },
         {
