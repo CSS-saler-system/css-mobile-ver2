@@ -59,9 +59,7 @@ class AppRouters {
                   title: arguments['title'],
                 ));
       case createOrderScreen:
-        return MaterialPageRoute(
-            builder: (_) =>
-                CreateOrderScreen(productId: arguments['productId']));
+        return MaterialPageRoute(builder: (_) => const CreateOrderScreen());
       case editCustomerScreen:
         return MaterialPageRoute(
             builder: (_) =>

@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:flutter_application_1/src/presentations/create_order/components/product_info.dart';
 import 'package:flutter_application_1/src/resource/data/failure.dart';
 import 'package:flutter_application_1/src/resource/repository/order_repository.dart';
 import 'base_usecase.dart';
@@ -12,7 +13,7 @@ class CreateOrderUsecase
   @override
   Future<Either<Failure, String>> execute(CreateOrderInput input) async {
     return await _repository.createOrder(input.productId, input.customerId,
-        input.quantity, input.address, input.phoneNumber);
+        input.quantity, input.address, input.phoneNumber, input.productOrder);
   }
 }
 
@@ -22,6 +23,7 @@ class CreateOrderInput {
   String address;
   String phoneNumber;
   int quantity;
+  List<ProductOrder> productOrder;
 
   CreateOrderInput({
     required this.productId,
@@ -29,5 +31,6 @@ class CreateOrderInput {
     required this.phoneNumber,
     required this.address,
     required this.quantity,
+    required this.productOrder,
   });
 }

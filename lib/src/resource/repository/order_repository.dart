@@ -8,13 +8,21 @@ import 'package:flutter_application_1/src/resource/data/failure.dart';
 import 'package:flutter_application_1/src/resource/request/get_order_detail_request.dart';
 import 'package:flutter_application_1/src/resource/request/order_request.dart';
 import 'package:flutter_application_1/src/resource/services/data_service.dart';
+import 'package:flutter_application_1/src/presentations/create_order/components/product_info.dart'
+    as OD;
 
 import '../response/order_response.dart';
 import 'local_reponsitory.dart';
 
 abstract class OrderRepository {
-  Future<Either<Failure, String>> createOrder(String productId,
-      String customerId, int quantity, String address, String phoneNumber);
+  Future<Either<Failure, String>> createOrder(
+    String productId,
+    String customerId,
+    int quantity,
+    String address,
+    String phoneNumber,
+    List<OD.ProductOrder> productOrders,
+  );
 
   Future<Either<Failure, GetOrders>> getOrders(GetOrdersRequest request);
 
@@ -30,26 +38,30 @@ class OrderRepositoryImpl implements OrderRepository {
 
   @override
   Future<Either<Failure, String>> createOrder(
-      String productId,
-      String customerId,
-      int quantity,
-      String address,
-      String phoneNumber) async {
+    String productId,
+    String customerId,
+    int quantity,
+    String address,
+    String phoneNumber,
+    List<OD.ProductOrder> productOrders,
+  ) async {
     try {
       final String token = await _localRepository.getToken();
       final String accounId = await _localRepository.getUserId();
-
+      log(productOrders.length.toString());
       final body = {
         "account": {"accountId": accounId},
         "customer": {"customerId": customerId},
         "deliveryAddress": address,
         "deliveryPhone": phoneNumber,
-        "orderDetails": [
-          {
-            "quantity": quantity,
-            "product": {"productId": productId}
-          }
-        ]
+        "orderDetails": productOrders
+            .map((product) => {
+                  "quantity": product.orderQuantiry,
+                  "product": {
+                    "productId": product.id,
+                  }
+                })
+            .toList()
       };
 
       String orderId = await _dataService.newOrder(token, body);

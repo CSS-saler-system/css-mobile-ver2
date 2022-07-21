@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_application_1/src/presentations/create_order/components/product_info.dart' as OD;
 import 'package:flutter_application_1/src/resource/data/failure.dart';
 import 'package:flutter_application_1/src/resource/response/customer_response.dart';
 import 'package:flutter_application_1/src/resource/usecase/create_order_usecase.dart';
@@ -37,6 +38,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         phoneNumber: event.phoneNumber,
         address: event.address,
         quantity: event.quantity,
+        productOrder: event.productOrder
       ),
     ))
         .fold((failure) => emit(CreateOrderError(failure: failure)),

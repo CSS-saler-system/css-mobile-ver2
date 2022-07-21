@@ -36,7 +36,8 @@ class _HeaderActionState extends State<HomeHeaderAction> {
   Widget _buildCartIcon() {
     return CustomIconButton(
       icon: Icons.local_grocery_store_outlined,
-      onPressed: () {},
+      onPressed: () =>
+          Navigator.pushNamed(context, AppRouters.createOrderScreen),
     );
   }
 

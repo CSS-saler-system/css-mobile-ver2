@@ -1,5 +1,7 @@
 part of 'order_bloc.dart';
 
+
+
 abstract class OrderEvent extends Equatable {
   const OrderEvent();
 
@@ -13,6 +15,7 @@ class CreateOrderEvent extends OrderEvent {
   final String address;
   final String phoneNumber;
   final int quantity;
+  final List<OD.ProductOrder> productOrder;
 
   const CreateOrderEvent({
     required this.productId,
@@ -20,6 +23,7 @@ class CreateOrderEvent extends OrderEvent {
     required this.phoneNumber,
     required this.address,
     required this.quantity,
+    required this.productOrder,
   });
 
   @override

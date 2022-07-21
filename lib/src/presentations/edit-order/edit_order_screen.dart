@@ -111,6 +111,7 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                       phoneNumber: _phoneNumber.text,
                       address: _address.text,
                       quantity: _quantity,
+                      productOrder: [],
                     ),
                   );
                 }

@@ -26,7 +26,7 @@ class _QuantityInputState extends State<QuantityInput> {
       child: Row(children: [
         GestureDetector(
           onTap: () {
-            setState(() => _quantity == 1 ? 1 : _quantity--);
+            setState(() => _quantity--);
             widget.onChanged(_quantity);
           },
           child: Container(

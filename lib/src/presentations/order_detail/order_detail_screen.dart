@@ -46,16 +46,16 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: CustomButton(
-                        text: "Edit Order",
-                        backgroundColor: Colors.white,
-                        onPressed: () => Navigator.of(context).pushNamed(
-                            AppRouters.updateOrderScreen,
-                            arguments: {"orderData": widget.orderData}),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
+                    // Expanded(
+                    //   child: CustomButton(
+                    //     text: "Edit Order",
+                    //     backgroundColor: Colors.white,
+                    //     onPressed: () => Navigator.of(context).pushNamed(
+                    //         AppRouters.updateOrderScreen,
+                    //         arguments: {"orderData": widget.orderData}),
+                    //   ),
+                    // ),
+                    // const SizedBox(width: 10),
                     Expanded(
                       child: CustomButton(
                         text: "Back to home",
