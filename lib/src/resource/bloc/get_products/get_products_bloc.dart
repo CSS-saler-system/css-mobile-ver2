@@ -8,6 +8,8 @@ import 'package:flutter_application_1/src/resource/response/product_response.dar
 import 'package:flutter_application_1/src/resource/usecase/get_enteprise_products_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_product_detail_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_products_usecase.dart';
+import 'package:flutter_application_1/src/resource/usecase/list_product_not_registed.dart';
+import 'package:flutter_application_1/src/resource/usecase/list_product_registed.dart';
 
 part 'get_products_event.dart';
 part 'get_products_state.dart';
@@ -16,13 +18,22 @@ class GetProductsBloc extends Bloc<GetProductsEvent, GetProductsState> {
   final GetProductsUseCase _useCase;
   final GetProductDetailUseCase _detailUseCase;
   final GetEntepriseProductsUseCase _entepriseProductsUseCase;
+  final GetProductNotRegistedUseCase _notRegistedUseCase;
+  final GetProductRegistedUseCase _registedUseCase;
+
   GetProductsBloc(
-      this._useCase, this._detailUseCase, this._entepriseProductsUseCase)
-      : super(GetProductsInitial()) {
+    this._useCase,
+    this._detailUseCase,
+    this._entepriseProductsUseCase,
+    this._notRegistedUseCase,
+    this._registedUseCase,
+  ) : super(GetProductsInitial()) {
     on<GetProductsEventGet>(_getProducts);
     on<GetProductsLoadMoreEvent>(_onLoadMore);
     on<GetProductDetailEvent>(_getProductDetail);
     on<GetEntepriseProductsEvent>(_getEntepriseProducts);
+    on<GetProductsNotReqistedEvent>(_getProductNotRegisted);
+    on<GetProductsReqistedEvent>(_getProductRegisted);
   }
 
   FutureOr<void> _getProducts(
@@ -72,10 +83,26 @@ class GetProductsBloc extends Bloc<GetProductsEvent, GetProductsState> {
             (response) => emit(GetProductDetailLoaded(product: response)));
   }
 
-  FutureOr<void> _getEntepriseProducts(GetEntepriseProductsEvent event,
-      Emitter<GetProductsState> emit) async {
+  FutureOr<void> _getEntepriseProducts(
+      GetEntepriseProductsEvent event, Emitter<GetProductsState> emit) async {
     (await _entepriseProductsUseCase.execute(event.request)).fold(
         (failure) => emit(GetProductsError(failure: failure)),
         (response) => emit(GetProductsLoaded(response: response)));
+  }
+
+  FutureOr<void> _getProductNotRegisted(
+      GetProductsNotReqistedEvent event, Emitter<GetProductsState> emit) async {
+    (await _notRegistedUseCase.execute(
+            GetProductNotRegistedUseCaseInput(entepriseId: event.enteprieseId)))
+        .fold((failure) => emit(GetProductsError(failure: failure)),
+            (response) => emit(GetProductsLoaded(response: response)));
+  }
+
+  FutureOr<void> _getProductRegisted(
+      GetProductsReqistedEvent event, Emitter<GetProductsState> emit) async {
+    (await _registedUseCase.execute(
+            GetProductRegistedUseCaseInput(entepriseId: event.enteprieseId)))
+        .fold((failure) => emit(GetProductsError(failure: failure)),
+            (response) => emit(GetProductsLoaded(response: response)));
   }
 }

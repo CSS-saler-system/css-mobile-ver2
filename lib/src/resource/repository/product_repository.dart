@@ -26,6 +26,12 @@ abstract class ProductRepository {
   Future<Either<Failure, SellingResponse>> getSellings(int page, int pageSize);
 
   Future<Either<Failure, CapmpaignsResponse>> getcampagins();
+
+  Future<Either<Failure, ListProductResponse>> getEntepriseRegistedProducts(
+      String entepriseId);
+
+  Future<Either<Failure, ListProductResponse>> getEntepriseNotRegistedProducts(
+      String entepriseId);
 }
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -142,6 +148,36 @@ class ProductRepositoryImpl implements ProductRepository {
         request.brand,
         request.productName,
       );
+      return Right(result);
+    } on DioError catch (e) {
+      log(e.message);
+      return Left(ErrorHandler.handle(e).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, ListProductResponse>> getEntepriseNotRegistedProducts(
+      String entepriseId) async {
+    try {
+      final String token = await _localRepository.getToken();
+      final accounId = await _localRepository.getUserId();
+      ListProductResponse result = await _dataService
+          .getEntepriseNotRegistedProducts(accounId, entepriseId, 1, 100000000);
+      return Right(result);
+    } on DioError catch (e) {
+      log(e.message);
+      return Left(ErrorHandler.handle(e).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, ListProductResponse>> getEntepriseRegistedProducts(
+      String entepriseId) async {
+    try {
+      final String token = await _localRepository.getToken();
+      final accounId = await _localRepository.getUserId();
+      ListProductResponse result = await _dataService
+          .getEntepriseRegistedProducts(accounId, entepriseId, 1, 100000000);
       return Right(result);
     } on DioError catch (e) {
       log(e.message);

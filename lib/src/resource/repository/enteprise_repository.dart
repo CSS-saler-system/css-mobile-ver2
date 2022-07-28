@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter_application_1/src/resource/data/failure.dart';
@@ -18,6 +20,7 @@ class EntepriseRepositoryImpl extends EntepriseRepository {
   @override
   Future<Either<Failure, List<EntepriseData>>> getAllEnteprise() async {
     try {
+      final userId = await _localRepository.getUserId();
       final response = await _dataService.getEnteprise(1, 100000000);
       return Right(response.data ?? []);
     } on DioError catch (e) {

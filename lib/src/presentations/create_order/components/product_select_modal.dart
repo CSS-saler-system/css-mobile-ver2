@@ -38,8 +38,8 @@ class _ProductModalSelectState extends State<ProductModalSelect> {
       _entepriseId = widget.entepriseId;
     });
 
-    _productsBloc.add(GetEntepriseProductsEvent(
-        request: GetEntepriseProductsUseCaseInput(id: widget.entepriseId)));
+    _productsBloc
+        .add(GetProductsReqistedEvent(enteprieseId: widget.entepriseId));
   }
 
   @override

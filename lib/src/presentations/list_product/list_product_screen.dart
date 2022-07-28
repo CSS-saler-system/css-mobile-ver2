@@ -34,10 +34,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
   @override
   void initState() {
     super.initState();
-
-    _getProductsBloc.add(GetEntepriseProductsEvent(
-        request: GetEntepriseProductsUseCaseInput(
-            page: 1, pageSize: _pageSize, id: widget.id)));
+    _getProductsBloc.add(GetProductsNotReqistedEvent(enteprieseId: widget.id));
   }
 
   @override
@@ -64,19 +61,19 @@ class _ListProductScreenState extends State<ListProductScreen> {
       body: BlocProvider(
         create: (context) => _getProductsBloc,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Column(children: [
-              TextField(
-                autofocus: false,
-                controller: searchController,
-                decoration: const InputDecoration(
-                  hintText: 'Search...',
-                  prefixIcon: Icon(Icons.search),
-                  contentPadding: EdgeInsets.symmetric(vertical: 20),
-                ),
-              ),
+              // TextField(
+              //   autofocus: false,
+              //   controller: searchController,
+              //   decoration: const InputDecoration(
+              //     hintText: 'Search...',
+              //     prefixIcon: Icon(Icons.search),
+              //     contentPadding: EdgeInsets.symmetric(vertical: 20),
+              //   ),
+              // ),
               Expanded(
                 child: BlocListener<GetProductsBloc, GetProductsState>(
                   listener: (context, state) {

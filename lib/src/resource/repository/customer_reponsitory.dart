@@ -75,7 +75,6 @@ class CustomerRepositoryImpl implements CustomerRepository {
       UpdateCustomerRequest request) async {
     try {
       final token = await _localRepository.getToken();
-      log(token.toString());
       final userId = await _localRepository.getUserId();
       final data = {
         "name": request.name,

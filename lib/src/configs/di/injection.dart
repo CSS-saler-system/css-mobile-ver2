@@ -30,6 +30,8 @@ import 'package:flutter_application_1/src/resource/usecase/get_otp_auth_usecase.
 import 'package:flutter_application_1/src/resource/usecase/get_product_detail_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_products_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/get_sellings_usecase.dart';
+import 'package:flutter_application_1/src/resource/usecase/list_product_not_registed.dart';
+import 'package:flutter_application_1/src/resource/usecase/list_product_registed.dart';
 import 'package:flutter_application_1/src/resource/usecase/login_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/update_customer_usecase.dart';
 import 'package:flutter_application_1/src/resource/usecase/verify_otp_login.dart';
@@ -75,6 +77,8 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => GetOrderDetailUseCase(getIt()));
   getIt.registerLazySingleton(() => GetListEntepriseUseCase(getIt()));
   getIt.registerLazySingleton(() => GetEntepriseProductsUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetProductNotRegistedUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetProductRegistedUseCase(getIt()));
   // FIREBASE_SERVICE
   getIt.registerLazySingleton<FirebaseAuthService>(
       () => FirebaseAuthServiceImpl(getIt()));
@@ -82,7 +86,8 @@ Future<void> configureDependencies() async {
   // BLOC
   getIt.registerFactory(() => LoginPhoneBloc(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => CreateCustomerBlocBloc(getIt()));
-  getIt.registerFactory(() => GetProductsBloc(getIt(), getIt(), getIt()));
+  getIt.registerFactory(
+      () => GetProductsBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
   getIt.registerFactory(() => CustomerBloc(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => UpdateCustomerBlocBloc(getIt()));
   getIt.registerFactory(() => SellingBlocBloc(getIt(), getIt()));

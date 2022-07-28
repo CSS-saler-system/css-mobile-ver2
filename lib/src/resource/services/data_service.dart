@@ -67,6 +67,24 @@ abstract class DataService {
     @Query("productName") String? productName,
   );
 
+  @GET("product/list-registered-by/{accountId}/product-of/{entepriseId}")
+  Future<ListProductResponse> getEntepriseRegistedProducts(
+    // @Header("Authorization") String? token,
+    @Path("accountId") String accountId,
+    @Path("entepriseId") String entepriseId,
+    @Query("pageNumber") int? page,
+    @Query("pageSize") int? pageSize,
+  );
+
+  @GET("product/list-not-registered-by/{accountId}/product-of/{entepriseId}")
+  Future<ListProductResponse> getEntepriseNotRegistedProducts(
+    // @Header("Authorization") String? token,
+    @Path("accountId") String accountId,
+    @Path("entepriseId") String entepriseId,
+    @Query("pageNumber") int? page,
+    @Query("pageSize") int? pageSize,
+  );
+
   @GET("product/get/{id}")
   Future<ProductData> getProductDetail(
     @Header("Authorization") String? token,

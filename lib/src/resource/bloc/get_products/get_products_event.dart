@@ -42,3 +42,21 @@ class GetEntepriseProductsEvent extends GetProductsEvent {
   @override
   List<Object> get props => [request];
 }
+
+class GetProductsNotReqistedEvent extends GetProductsEvent {
+  final String enteprieseId;
+
+  const GetProductsNotReqistedEvent({required this.enteprieseId});
+
+  @override
+  List<Object> get props => [enteprieseId];
+}
+
+class GetProductsReqistedEvent extends GetProductsEvent {
+  final String enteprieseId;
+
+  const GetProductsReqistedEvent({required this.enteprieseId});
+
+  @override
+  List<Object> get props => [enteprieseId];
+}
