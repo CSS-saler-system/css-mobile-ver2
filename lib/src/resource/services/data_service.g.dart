@@ -10,8 +10,7 @@ part of 'data_service.dart';
 
 class _DataService implements DataService {
   _DataService(this._dio, {this.baseUrl}) {
-    baseUrl ??=
-        'https://happy-bee-api.azurewebsites.net/api/v3.0/collaborator/';
+    baseUrl ??= 'https://css-api.azurewebsites.net/api/v3.0/collaborator/';
   }
 
   final Dio _dio;

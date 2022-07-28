@@ -11,8 +11,7 @@ import '../response/order_response.dart';
 
 part 'data_service.g.dart';
 
-@RestApi(
-    baseUrl: "https://happy-bee-api.azurewebsites.net/api/v3.0/collaborator/")
+@RestApi(baseUrl: "https://css-api.azurewebsites.net/api/v3.0/collaborator/")
 abstract class DataService {
   factory DataService(Dio dio) = _DataService;
 
